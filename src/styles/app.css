@@ -1,0 +1,9 @@
+/* App Icons */
+@import '~font-awesome/css/font-awesome.min.css';
+/* @import '~material-icons/css/material-icons.min.css';  */
+/* Core Bootstrap Styles */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+/* Custom Styles */
+@import 'shards-dashboards.1.0.0.css'; 
+@import 'extras.1.0.0.min.css';
+@import '_crud.css';

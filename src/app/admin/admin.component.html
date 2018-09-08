@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Admin Sidebar -->
+    <app-sidebar></app-sidebar>
+    <!-- Admin Page Content -->
+    <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+      <!-- Admin Navbar -->
+      <div class="main-navbar sticky-top bg-white">
+        <app-header></app-header>
+        <!-- App Messages -->
+        <app-message></app-message>
+      </div>
+      <div class="main-content-container container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

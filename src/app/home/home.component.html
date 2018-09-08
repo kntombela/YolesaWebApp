@@ -1,0 +1,116 @@
+<div class="bg-img">
+  <nav class="navbar navbar-light align-items-stretch pt-0">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/img/icons/ic_full_right.png" width="200" height="45" class="d-inline-block align-top" alt="">
+    </a>
+    <div class="float-right mt-3">
+      <a class="nav-item nav-link d-inline" href="javascript:void(0)" (click)="auth.login()">Login/Register</a>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col align-self-end order-last order-sm-first mt-3">
+        <div class="row">
+          <div class="col">
+            <h1 class="mb-0 pb-0">Coming Soon</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-sm-3">
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="row cd100">
+          <div class="col col-sm-6 ml-0 pl-0">
+            <div class="row">
+              <div class="col text-center">
+                <p class="mb-0">Days</p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">Hours</p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">Minutes</p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">Seconds</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <p class="mb-0">
+                  <span class="days">35</span>
+                </p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">
+                  <span class="hours">17</span>
+                </p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">
+                  <span class="minutes">50</span>
+                </p>
+              </div>
+              <div class="col text-center">
+                <p class="mb-0">
+                  <span class="seconds">39</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 mr-sm-3">
+        <div class="card login-card">
+          <div class="bg-transparent text-center">
+            <h2 class="mt-2 mb-0">Get in touch</h2>
+          </div>
+          <div class="card-body">
+            <form #leadForm="ngForm" class="form-horizontal">
+              <div class="form-group py-2">
+                <input class="form-control rounded text-center" name="firstname" placeholder="Name" [(ngModel)]="lead.name" #firstname="ngModel"
+                      required>
+                    <div class="alert alert-danger" [hidden]="firstname.valid || firstname.pristine">
+                      Name is required
+                    </div>
+              </div>
+              <div class="form-group py-2">
+                <input type="email" class="form-control rounded text-center" name="email" placeholder="Email" [(ngModel)]="lead.email" #email="ngModel"
+                      required email>
+                    <div class="alert alert-danger" [hidden]="email.valid || email.pristine">
+                      <div *ngIf="email.hasError.required">
+                        Email is required.
+                      </div>
+                      <div *ngIf="email.hasError.email">
+                        Incorrect email.
+                      </div>
+                    </div>
+              </div>
+              <div class="form-group py-2">
+                <input (click)="add(lead)" [disabled]="!leadForm.form.valid" value="Subscribe" class="btn btn-block btn-accent" />
+              </div>
+            </form>
+            <div class="text-center alert alert-dismissible alert-success" [hidden]="!message">
+                {{ message }}
+              </div>
+            <p class="text-left pt-2 pb-0 mb-0 small" style="font-size: 20px">And don’t worry, we hate spam too! You
+              can unsubscribe at
+              anytime</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row p-3 mt-4">
+      <a href="#" class="flex-c-m size5 bg3 how1 trans-04 mr-2 text-center">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a href="#" class="flex-c-m size5 bg3 how1 trans-04 mr-2 text-center">
+        <i class="fa fa-twitter"></i>
+      </a>
+      <a href="#" class="flex-c-m size5 bg3 how1 trans-04 mr-2 text-center">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </div>
+  </div>
+</div>

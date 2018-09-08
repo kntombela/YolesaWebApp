@@ -1,0 +1,124 @@
+<!-- Crud Actions -->
+<div class="row crud-actions">
+  <div class="col">
+    <div class="btn-group mb-2" role="group" aria-label="Basic example">
+      <a class="btn btn-crud-primary pl-0" [routerLink]="['/admin/lead/new']">
+        <span class="fa fa-plus mr-2"></span>New
+      </a>
+      <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isEditActive}" [hidden]="!crud.isEditActive"
+        [routerLink]="['/admin/lead/detail']">
+        <span class="fa fa-pencil-alt mr-2"></span>Edit
+      </button>
+      <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isDeleteActive}" [hidden]="!crud.isDeleteActive"
+        data-toggle="modal" data-target="#deleteModal">
+        <span class="fa fa-trash mr-2"></span>Delete
+      </button>
+      <button class="btn btn-crud-primary" (click)="refresh()">
+        <span class="fa fa-sync mr-2"></span>Refresh
+      </button>
+      <!-- Collapsed Crud Actions -->
+      <div class="dropdown d-inline d-md-none">
+        <button class="btn btn-crud-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="fa fa-ellipsis-v"></span>
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" [hidden]="!crud.isEditActive" [routerLink]="['/admin/lead/detail']">
+            <span class="fa fa-edit mr-2"></span>Edit
+          </a>
+          <a class="dropdown-item" href="#" [hidden]="!crud.isDeleteActive" data-toggle="modal" data-target="#deleteModal">
+            <span class="fa fa-trash mr-2"></span>Delete
+          </a>
+          <a class="dropdown-item" href="#">
+            <span class="fa fa-download mr-2"></span>Import
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 mr-4" [hidden]="crud.getSelectedItemCount() == 0">
+      <button class="btn btn-crud-primary" (click)="crud.resetSelectedItems()">
+          {{crud.getSelectedItemCount()}} Selected
+          <span class="fa fa-times ml-2"></span>
+        </button>
+  </div>
+</div>
+<!-- Page Header -->
+<div class="page-header row no-gutters pb-4 pt-5">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Leads</span>
+    <h3 class="page-title">Index</h3>
+  </div>
+</div>
+<!-- Table of Leads -->
+<div class="row">
+  <div class="col">
+    <div class="card card-small mb-4">
+      <div class="card-body p-0 pb-3">
+        <table class="table table-hover mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col" class="border-0">
+                <input type="checkbox" (ngModelChange)="onCheckAllRows($event)" [(ngModel)]="crud.checkboxes.checked">
+              </th>
+              <th scope="col" class="border-0">#</th>
+              <th scope="col" class="border-0">Name</th>
+              <th scope="col" class="border-0 hide">Surname</th>
+              <th scope="col" class="border-0 hide">Email</th>
+              <th scope="col" class="border-0 hide">Phone</th>
+              <th scope="col" class="border-0 text-center">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lead of crud.data; let i = index" (click)="crud.resetSelectedItems(); onCheckRow($event, lead.id)" [ngClass]="{'row-selected': crud.checkboxes.items[lead.id]}">
+              <td>
+                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="onCheckRow($event, lead.id)" [(ngModel)]="crud.checkboxes.items[lead.id]">
+              </td>
+              <td>{{i+1}}</td>
+              <td>{{lead.name}}</td>
+              <td class="hide">{{lead.surname}}</td>
+              <td class="hide">{{lead.email}}</td>
+              <td class="hide">{{lead.phone}}</td>
+              <td class="text-center" [ngSwitch]="lead.status">
+                <span *ngSwitchCase="0" class="badge badge-pill badge-primary">New</span>
+                <span *ngSwitchCase="1" class="badge badge-pill badge-success">Prospect</span>
+                <span *ngSwitchCase="2" class="badge badge-pill badge-secondary">Lost</span>
+              </td>
+              <td>
+                <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></span>
+                <div class="dropdown-menu dropdown-menu-small">
+                  <a class="dropdown-item" routerLink="/admin/lead/detail/{{lead.id}}">
+                    <i class="material-icons dropdown-menu-item mr-1">edit</i> Edit
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="material-icons dropdown-menu-item mr-1">delete</i> Delete
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-accent" (click)="delete()">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

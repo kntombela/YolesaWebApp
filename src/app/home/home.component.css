@@ -1,0 +1,128 @@
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+  font-family: 'OptimusPrinceps';
+  src: url('../../assets/fonts/OptimusPrinceps.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'OptimusPrincepsSemiBold';
+  src: url('../../assets/fonts/OptimusPrincepsSemiBold.ttf') format('truetype');
+}
+
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+ will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+  white-space: normal;
+}
+
+.bg-img {
+  background-image: url('../../assets/img/img_bg_home.jpg');
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-card {
+  border-radius: 25px;
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.rounded {
+  border: none;
+  background-color: #f2f2f2;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  transition: all 0.4s;
+}
+
+.rounded:focus {
+  border: 2px solid #311923;
+  opacity: 1;
+}
+
+.btn-accent {
+  color: #fff;
+  border-color: #876933;
+  background-color: #876933;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  box-shadow: none; }
+  .btn-accent:hover {
+    color: #fff;
+    background-color: #876933;
+    border-color: #876933;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(255, 163, 0, 0.25); }
+  .btn-accent:focus, .btn-accent.focus {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15), 0 3px 15px rgba(0, 123, 255, 0.2), 0 2px 5px rgba(0, 0, 0, 0.1); }
+
+.divider {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  border-style: inset;
+  border-width: 2px;
+  border-color: #876933;
+}
+
+/* Social Media Icon Styling */
+.size5 {
+  width: 36px;
+  height: 36px;
+}
+
+.bg3 {
+  background-color: #797979;
+}
+
+.how1 {
+  border-radius: 50%;
+  font-size: 22px;
+  color: #fff;
+}
+
+.how1:hover {
+  background-color: #876933;
+  color: #fff;
+}
+
+.trans-04 {
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.social-media {
+  position: absolute;
+  bottom: 16px;
+  left: 30px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+p {
+  font-family: OptimusPrinceps;
+}
+
+h1, h2{
+  color: #311923;
+}

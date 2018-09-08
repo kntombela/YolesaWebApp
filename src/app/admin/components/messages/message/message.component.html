@@ -1,0 +1,22 @@
+<div *ngIf="messageService.messages.length">
+  <div *ngFor='let message of messageService.messages'>
+    <!-- Success -->
+    <div *ngIf="messageService.isSuccess">
+      <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" (click)="messageService.clear()" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" class="fa fa-xs fa-times"></span>
+        </button>
+        <i class="fa fa-check mx-2"></i>
+        <strong>Success!</strong>{{message}}</div>
+    </div>
+    <!-- Error -->
+    <div *ngIf="!messageService.isSuccess">
+      <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" (click)="messageService.clear()" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" class="fa fa-xs fa-times"></span>
+        </button>
+        <i class="fa fa-check mx-2"></i>
+        <strong>Success!</strong>{{message}}</div>
+    </div>
+  </div>
+</div>

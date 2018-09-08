@@ -23,9 +23,23 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/app.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/shards-ui/dist/js/shards.min.js",
+              "node_modules/sharrre/dist/jquery.sharrre.min.js",
+              "src/assets/js/extras.1.0.0.min.js",
+              "src/assets/js/shards-dashboards.1.0.0.min.js",
+              "src/assets/vendor/jquery-easing/jquery.easing.min.js",
+              "src/assets/js/scrolling-nav.js",
+              "src/assets/vendor/countdowntime/moment.min.js",
+              "src/assets/vendor/countdowntime/moment-timezone.min.js",
+              "src/assets/vendor/countdowntime/moment-timezone-with-data.min.js",
+              "src/assets/vendor/countdowntime/countdowntime.js"
+            ]
           },
           "configurations": {
             "production": {

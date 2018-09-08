@@ -1,0 +1,78 @@
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Leads</span>
+    <h3 class="page-title">New</h3>
+  </div>
+</div>
+<!-- Lead Details -->
+<div class="row" *ngIf="lead">
+  <div class="col-lg-8">
+    <div class="card card-small mb-4">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+          <div class="row">
+            <div class="col">
+              <form #leadForm="ngForm">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="txtName">Name</label>
+                    <input class="form-control" id="txtName" name="firstname" placeholder="Name" [(ngModel)]="lead.name" #firstname="ngModel"
+                      required>
+                    <div class="alert alert-danger" [hidden]="firstname.valid || firstname.pristine">
+                      Name is required
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="txtSurname">Surname</label>
+                    <input class="form-control" id="txtSurname" name="surname" placeholder="Surname" [(ngModel)]="lead.surname" #surname="ngModel"
+                      required>
+                    <div class="alert alert-danger" [hidden]="surname.valid || surname.pristine">
+                      Surname is required
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="txtEmail">Email</label>
+                    <input type="email" class="form-control" id="txtEmail" name="email" placeholder="Email" [(ngModel)]="lead.email" #email="ngModel"
+                      required email>
+                    <div class="alert alert-danger" [hidden]="email.valid || email.pristine">
+                      <div *ngIf="email.hasError.required">
+                        Email is required.
+                      </div>
+                      <div *ngIf="email.hasError.email">
+                        Incorrect email.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="txtPhone">Phone</label>
+                    <input type="text" class="form-control" id="txtPhone" name="phone" placeholder="0825668458" [(ngModel)]="lead.phone" #phone="ngModel"
+                      maxlength="10" required>
+                    <div class="alert alert-danger" [hidden]="phone.valid || phone.pristine">
+                      <div *ngIf="phone.hasError.required">
+                        Phone number is required.
+                      </div>
+                      <div *ngIf="phone.hasError.maxlength">
+                        Phone number invalid.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cbStatus">Status</label>
+                  <select id="cbStatus" class="form-control" name="status" [(ngModel)]="lead.status">
+                    <option selected>Choose...</option>
+                    <option *ngFor="let s of status" [value]="s.id">{{s.name}}</option>
+                  </select>
+                </div>
+                <button class="btn btn-accent" (click)="add(lead)" [disabled]="!leadForm.form.valid">Save Lead</button>
+              </form>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">User Profile</span>
+    <h3 class="page-title">Edit Profile</h3>
+  </div>
+</div>
+<!-- Profile Overview -->
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card card-small mb-4 pt-3">
+      <div class="card-header border-bottom text-center">
+        <div class="mb-3 mx-auto">
+          <img class="rounded-circle" src="{{user.general.picture}}" alt="User Avatar" width="110"> </div>
+        <h4 class="mb-0">{{user.user_metadata.first_name | titlecase}}</h4>
+        <span class="text-muted d-block mb-2">{{ user.user_metadata.designation }}</span>
+        <div>
+          <p class="text_muted d-inline">Verified</p>
+          <i class="fa fa-check-circle ml-1 d-inline" style="color:green"></i>
+        </div>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item px-4">
+          <strong class="text-muted d-block mb-2">Group</strong>
+          <span>Kwa-Thema Funeral Services</span>
+          <a class="btn-crud-primary" [routerLink]="['/admin/lead/new']">
+            <span class="fa fa-pencil-alt ml-2"></span>
+          </a>
+        </li>
+        <li class="list-group-item p-4">
+          <span class="small float-right">Last Updated: {{user.general.updated_at | date:'medium'}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Edit Overview -->
+  <div class="col-lg-8">
+    <div class="card card-small mb-4">
+      <div class="card-header border-bottom">
+        <h6 class="m-0">Account Details</h6>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+          <div class="row">
+            <div class="col">
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="feName">Name</label>
+                    <input type="text" class="form-control" id="feName" placeholder="Name" [(ngModel)]="user.user_metadata.first_name" name="first_name">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="feSurname">Surname</label>
+                    <input type="text" class="form-control" id="feSurname" placeholder="Surname" [(ngModel)]="user.user_metadata.surname" name="surname">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="feDesignation">Designation</label>
+                  <input type="text" class="form-control" id="feDesignation" placeholder="Project Manager" [(ngModel)]="user.user_metadata.designation" name="designation">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="feEmail">Designation</label>
+                    <input type="email" class="form-control" id="feEmail" placeholder="themba@gmail.com" [(ngModel)]="user.general.name" name="email">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="feContact">Cellphone Number</label>
+                    <input type="text" class="form-control" id="feContact" placeholder="0832000795" [(ngModel)]="user.user_metadata.contact" name="contact">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="feInputAddress">Address</label>
+                  <input type="text" class="form-control" id="feInputAddress" placeholder="1234 Main St"> </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="feInputCity">City</label>
+                    <input type="text" class="form-control" id="feInputCity"> </div>
+                  <div class="form-group col-md-4">
+                    <label for="feInputProvince">Province</label>
+                    <select id="feInputProvince" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="inputZip"> </div>
+                </div>
+                <button (click)="update()" class="btn btn-accent">Update Account</button>
+              </form>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
