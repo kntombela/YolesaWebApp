@@ -3,18 +3,18 @@
   <div class="col">
     <div class="btn-group mb-2" role="group" aria-label="Basic example">
       <a class="btn btn-crud-primary pl-0" [routerLink]="['/admin/group/new']">
-        <span class="fa fa-plus mr-2"></span>New
+        <i class="material-icons mr-1">add</i>New
       </a>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isEditActive}" [hidden]="!crud.isEditActive"
         [routerLink]="['/admin/group/detail']">
-        <span class="fa fa-pencil-alt mr-2"></span>Edit
+        <i class="material-icons mr-1">edit</i>Edit
       </button>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isDeleteActive}" [hidden]="!crud.isDeleteActive"
         data-toggle="modal" data-target="#deleteModal">
-        <span class="fa fa-trash mr-2"></span>Delete
+        <i class="material-icons mr-1">delete</i>Delete
       </button>
       <button class="btn btn-crud-primary" (click)="refresh()">
-        <span class="fa fa-sync mr-2"></span>Refresh
+        <i class="material-icons mr-1">refresh</i>Refresh
       </button>
       <!-- Collapsed Crud Actions -->
       <div class="dropdown d-inline d-md-none">
@@ -23,13 +23,13 @@
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" [hidden]="!crud.isEditActive" [routerLink]="['/admin/group/detail']">
-            <span class="fa fa-edit mr-2"></span>Edit
+            <i class="material-icons mr-1">edit</i>Edit
           </a>
           <a class="dropdown-item" href="#" [hidden]="!crud.isDeleteActive" data-toggle="modal" data-target="#deleteModal">
-            <span class="fa fa-trash mr-2"></span>Delete
+            <i class="material-icons mr-1">delete</i>Delete
           </a>
           <a class="dropdown-item" href="#">
-            <span class="fa fa-download mr-2"></span>Import
+            <i class="material-icons mr-1">import_export</i>Import
           </a>
         </div>
       </div>
@@ -38,7 +38,7 @@
   <div class="col-3 mr-4" [hidden]="crud.getSelectedItemCount() == 0">
     <button class="btn btn-crud-primary" (click)="crud.resetSelectedItems()">
       {{crud.getSelectedItemCount()}} Selected
-      <span class="fa fa-times ml-2"></span>
+      <i class="material-icons">clear</i>
     </button>
   </div>
 </div>
@@ -62,7 +62,8 @@
               </th>
               <th scope="col" class="border-0">#</th>
               <th scope="col" class="border-0">Name</th>
-              <th scope="col" class="border-0 hide text-center">Group Type</th>
+              <th scope="col" class="border-0 hide text-center"># Members</th>
+              <th scope="col" class="border-0 hide text-center">Policy Number</th>
               <th></th>
             </tr>
           </thead>
@@ -75,11 +76,8 @@
               </td>
               <td>{{i+1}}</td>
               <td>{{group.name}}</td>
-              <td class="text-center" [ngSwitch]="group.type">
-                <span *ngSwitchCase="0" class="badge badge-pill badge-primary">Parlour</span>
-                <span *ngSwitchCase="1" class="badge badge-pill badge-success">Informal</span>
-                <span *ngSwitchCase="2" class="badge badge-pill badge-secondary">Other</span>
-              </td>
+              <td class="hide text-center">{{group.memberCount}}</td>
+              <td class="hide text-center">{{group.policyNumber}}</td>
               <td>
                 <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                   aria-expanded="false"></span>

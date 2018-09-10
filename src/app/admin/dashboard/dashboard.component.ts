@@ -1,3 +1,5 @@
+import { GroupService } from './../group/group.service';
+import { LeadService } from './../lead/lead.service';
 import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,10 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  leadCount: number;
+  groupCount: number;
+
+  constructor(
+    private leadService: LeadService,
+    private groupService: GroupService
+  ) { }
 
   ngOnInit() {
+    this.getLeadCount();
+    this.getGroupCount();
+  }
 
+  getLeadCount() {
+    this.leadService.get()
+      .subscribe(leads => this.leadCount = leads.length);
+  }
+
+  getGroupCount() {
+    this.groupService.get()
+      .subscribe(groups => this.groupCount = groups.length);
   }
 
 }

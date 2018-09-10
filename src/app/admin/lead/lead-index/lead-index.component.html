@@ -3,18 +3,18 @@
   <div class="col">
     <div class="btn-group mb-2" role="group" aria-label="Basic example">
       <a class="btn btn-crud-primary pl-0" [routerLink]="['/admin/lead/new']">
-        <span class="fa fa-plus mr-2"></span>New
+        <i class="material-icons mr-1">add</i>New
       </a>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isEditActive}" [hidden]="!crud.isEditActive"
         [routerLink]="['/admin/lead/detail']">
-        <span class="fa fa-pencil-alt mr-2"></span>Edit
+        <i class="material-icons mr-1">edit</i>Edit
       </button>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isDeleteActive}" [hidden]="!crud.isDeleteActive"
         data-toggle="modal" data-target="#deleteModal">
-        <span class="fa fa-trash mr-2"></span>Delete
+        <i class="material-icons mr-1">delete</i>Delete
       </button>
       <button class="btn btn-crud-primary" (click)="refresh()">
-        <span class="fa fa-sync mr-2"></span>Refresh
+        <i class="material-icons mr-1">refresh</i>Refresh
       </button>
       <!-- Collapsed Crud Actions -->
       <div class="dropdown d-inline d-md-none">
@@ -23,23 +23,23 @@
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" [hidden]="!crud.isEditActive" [routerLink]="['/admin/lead/detail']">
-            <span class="fa fa-edit mr-2"></span>Edit
+            <i class="material-icons mr-1">edit</i>Edit
           </a>
           <a class="dropdown-item" href="#" [hidden]="!crud.isDeleteActive" data-toggle="modal" data-target="#deleteModal">
-            <span class="fa fa-trash mr-2"></span>Delete
+            <i class="material-icons mr-1">delete</i>Delete
           </a>
           <a class="dropdown-item" href="#">
-            <span class="fa fa-download mr-2"></span>Import
+            <i class="material-icons mr-1">import_export</i>Import
           </a>
         </div>
       </div>
     </div>
   </div>
   <div class="col-3 mr-4" [hidden]="crud.getSelectedItemCount() == 0">
-      <button class="btn btn-crud-primary" (click)="crud.resetSelectedItems()">
-          {{crud.getSelectedItemCount()}} Selected
-          <span class="fa fa-times ml-2"></span>
-        </button>
+    <button class="btn btn-crud-primary" (click)="crud.resetSelectedItems()">
+      {{crud.getSelectedItemCount()}} Selected
+      <i class="material-icons">clear</i>
+    </button>
   </div>
 </div>
 <!-- Page Header -->
@@ -70,9 +70,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let lead of crud.data; let i = index" (click)="crud.resetSelectedItems(); onCheckRow($event, lead.id)" [ngClass]="{'row-selected': crud.checkboxes.items[lead.id]}">
+            <tr *ngFor="let lead of crud.data; let i = index" (click)="crud.resetSelectedItems(); onCheckRow($event, lead.id)"
+              [ngClass]="{'row-selected': crud.checkboxes.items[lead.id]}">
               <td>
-                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="onCheckRow($event, lead.id)" [(ngModel)]="crud.checkboxes.items[lead.id]">
+                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="onCheckRow($event, lead.id)"
+                  [(ngModel)]="crud.checkboxes.items[lead.id]">
               </td>
               <td>{{i+1}}</td>
               <td>{{lead.name}}</td>
@@ -85,7 +87,8 @@
                 <span *ngSwitchCase="2" class="badge badge-pill badge-secondary">Lost</span>
               </td>
               <td>
-                <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></span>
+                <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                  aria-expanded="false"></span>
                 <div class="dropdown-menu dropdown-menu-small">
                   <a class="dropdown-item" routerLink="/admin/lead/detail/{{lead.id}}">
                     <i class="material-icons dropdown-menu-item mr-1">edit</i> Edit

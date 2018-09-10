@@ -1,5 +1,12 @@
 export enum GroupType {
-    Parlour,
-    Informal,
+    Company,
+    CC,
+    SoleProprietor,
+    Partnership,
+    Trust,
+    Union,
+    BurialSociety,
+    FuneralParlour,
+    Church,
     Other
 }
