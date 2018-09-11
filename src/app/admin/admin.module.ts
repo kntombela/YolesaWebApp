@@ -13,6 +13,7 @@ import { LeadNewComponent } from './lead/lead-new/lead-new.component';
 import { MessageComponent } from './components/messages/message/message.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GroupIndexComponent } from './group/group-index/group-index.component';
+import { MemberIndexComponent } from './member/member-index/member-index.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import { GroupIndexComponent } from './group/group-index/group-index.component';
     LeadNewComponent, 
     MessageComponent, 
     ProfileComponent, 
-    GroupIndexComponent
+    GroupIndexComponent, MemberIndexComponent
   ]
 })
 export class AdminModule { }

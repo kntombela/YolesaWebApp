@@ -1,0 +1,133 @@
+<!-- Crud Actions -->
+<div class="row crud-actions">
+  <div class="col">
+    <div class="btn-member mb-2" role="member" aria-label="Basic example">
+      <a class="btn btn-crud-primary pl-0" [routerLink]="['/admin/member/new']">
+        <i class="material-icons mr-1">add</i>New
+      </a>
+      <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isEditActive}" [hidden]="!crud.isEditActive"
+        [routerLink]="['/admin/member/detail']">
+        <i class="material-icons mr-1">edit</i>Edit
+      </button>
+      <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isDeleteActive}" [hidden]="!crud.isDeleteActive"
+        data-toggle="modal" data-target="#deleteModal">
+        <i class="material-icons mr-1">delete</i>Delete
+      </button>
+      <button class="btn btn-crud-primary" (click)="refresh()">
+        <i class="material-icons mr-1">refresh</i>Refresh
+      </button>
+      <!-- Collapsed Crud Actions -->
+      <div class="dropdown d-inline d-md-none">
+        <button class="btn btn-crud-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="fa fa-ellipsis-v"></span>
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" [hidden]="!crud.isEditActive" [routerLink]="['/admin/member/detail']">
+            <i class="material-icons mr-1">edit</i>Edit
+          </a>
+          <a class="dropdown-item" href="#" [hidden]="!crud.isDeleteActive" data-toggle="modal" data-target="#deleteModal">
+            <i class="material-icons mr-1">delete</i>Delete
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons mr-1">import_export</i>Import
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 mr-4" [hidden]="crud.getSelectedItemCount() == 0">
+    <button class="btn btn-crud-primary" (click)="crud.resetSelectedItems()">
+      {{crud.getSelectedItemCount()}} Selected
+      <i class="material-icons">clear</i>
+    </button>
+  </div>
+</div>
+<!-- Page Header -->
+<div class="page-header row no-gutters pb-4 pt-5">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">{{ pageTitle }}</span>
+    <h3 class="page-title">Index</h3>
+  </div>
+</div>
+<!-- Table of members -->
+<div class="row">
+  <div class="col">
+    <div class="card card-small mb-4">
+      <div class="card-body p-0 pb-3">
+        <table class="table table-hover mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col" class="border-0">
+                <input type="checkbox" (ngModelChange)="onCheckAllRows($event)" [(ngModel)]="crud.checkboxes.checked">
+              </th>
+              <th scope="col" class="border-0">#</th>
+              <th scope="col" class="border-0">Title</th>
+              <th scope="col" class="border-0">FullName(s)</th>
+              <th scope="col" class="border-0 hide">Surname</th>
+              <th scope="col" class="border-0 hide text-center">Active</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of crud.data; let i = index" (click)="crud.resetSelectedItems(); onCheckRow($event, member.id)"
+              [ngClass]="{'row-selected': crud.checkboxes.items[member.id]}">
+              <td>
+                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="onCheckRow($event, member.id)"
+                  [(ngModel)]="crud.checkboxes.items[member.id]">
+              </td>
+              <td>{{i+1}}</td>
+              <td [ngSwitch]="member.title">
+                <span *ngSwitchCase="0">Adv</span>
+                <span *ngSwitchCase="1">Dr</span>
+                <span *ngSwitchCase="2">Hon</span>
+                <span *ngSwitchCase="4">Mrs</span>
+                <span *ngSwitchCase="3">Mr</span>
+                <span *ngSwitchCase="5">Ms</span>
+                <span *ngSwitchCase="6">Prof</span>
+                <span *ngSwitchCase="7">Rev</span>
+              </td>
+              <td>{{member.fullNames}}</td>
+              <td class="hide">{{member.surname}}</td>
+              <td class="hide text-center" [ngSwitch]="member.isActive">
+                  <span *ngSwitchCase="1" class="badge badge-pill badge-success small">Online</span>
+                  <span *ngSwitchCase="0" class="badge badge-pill badge-light small">Offline</span>
+                </td>
+              <td>
+                <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                  aria-expanded="false"></span>
+                <div class="dropdown-menu dropdown-menu-small">
+                  <a class="dropdown-item" routerLink="/admin/member/detail/{{member.id}}">
+                    <i class="material-icons dropdown-menu-item mr-1">edit</i> Edit
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="material-icons dropdown-menu-item mr-1">delete</i> Delete
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-accent" (click)="delete()">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

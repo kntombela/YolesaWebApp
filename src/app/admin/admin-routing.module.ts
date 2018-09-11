@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeadNewComponent } from './lead/lead-new/lead-new.component';
 import { GroupIndexComponent } from './group/group-index/group-index.component';
+import { MemberIndexComponent } from './member/member-index/member-index.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
         { path: 'lead/new', component: LeadNewComponent },
         { path: 'lead/detail/:id', component: LeadDetailComponent },
         { path: 'profile', component: ProfileComponent },
-        { path: 'group', component: GroupIndexComponent }
+        { path: 'group', component: GroupIndexComponent },
+        { path: 'member', component: MemberIndexComponent }
         // { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
         // { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
         // { path: 'forms', loadChildren: './form/form.module#FormModule' },

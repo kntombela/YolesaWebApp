@@ -1,4 +1,4 @@
-import { Group } from './group';
+import { Member } from './member';
 import { Observable,  of } from 'rxjs';
 import { MessageService } from './../components/messages/message.service';
 import { Injectable } from '@angular/core';
@@ -12,35 +12,35 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class GroupService {
+export class MemberService {
 
-  private accessPointUrl: string = 'https://localhost:44314/api/groups';
+  private accessPointUrl: string = 'https://localhost:44314/api/members';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
-  /** GET: Get all leads*/
-  public get(): Observable<Group[]> {
-    return this.http.get<Group[]>(this.accessPointUrl, httpOptions)
+  /** GET: Get all members*/
+  public get(): Observable<Member[]> {
+    return this.http.get<Member[]>(this.accessPointUrl, httpOptions)
       .pipe(
         tap(),
-        catchError(this.handleError('getGroups', []))
+        catchError(this.handleError('getMembers', []))
       );
   }
 
-  /** GET: Get group by user id*/
-  getGroupByUserId(userId: string): Observable<Group> {
-    var uri = 'https://localhost:44314/api/groupusers/' + userId + '/groups';
-    return this.http.get<Group>(uri, httpOptions)
-    .pipe(
-      tap(),
-      catchError(this.handleError<Group>('getGroup'))
-    );  
+  /** GET: Get members by groupId*/
+  public getMembersByGroupID(groupId: number): Observable<Member[]> {
+    var uri = 'https://localhost:44314/api/groups/' + groupId + '/members';
+    return this.http.get<Member[]>(uri, httpOptions)
+      .pipe(
+        tap(),
+        catchError(this.handleError('getMembersByGroupID', []))
+      );
   }
 
 
   /******************** Private Helpers ********************/
   private log(message: string, isSuccess: boolean) {
-    this.messageService.add(`GroupService: ${message}`, isSuccess);
+    this.messageService.add(`MemberService: ${message}`, isSuccess);
   }
   /**
 * Handle Http operation that failed.
