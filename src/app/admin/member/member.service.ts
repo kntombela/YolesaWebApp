@@ -37,6 +37,39 @@ export class MemberService {
       );
   }
 
+  /** GET: Get member by id*/
+  getMember(id: number): Observable<Member> {
+    return this.http.get<Member>(this.accessPointUrl + '/' + id, httpOptions)
+    .pipe(
+      tap(),
+      catchError(this.handleError<Member>('getMember'))
+    );  
+  }
+
+  /** PUT: */
+  update(member: Member): Observable<any> {
+    return this.http.put(this.accessPointUrl + '/' + member.id, member, httpOptions) 
+    .pipe(
+        tap(_ => this.log(`updated member id=${member.id}`, true)),
+        catchError(this.handleError<any>('updateMember')) 
+      );
+  }
+
+  /** POST: */
+  add (member: Member): Observable<Member> {
+    return this.http.post<Member>(this.accessPointUrl, member, httpOptions).pipe(
+      tap((member: Member) => this.log(`added member w/ id=${member.id}`, true)),
+      catchError(this.handleError<Member>('addMember'))
+    );
+  }
+
+  /** POST: */
+  delete (ids: any[]): Observable<any> {
+    return this.http.post<any[]>(this.accessPointUrl + '/delete', ids , httpOptions).pipe(
+      tap(_ => this.log(`deleted members`, true)),
+      catchError(this.handleError<Member>('deleteMember'))
+    );
+  }
 
   /******************** Private Helpers ********************/
   private log(message: string, isSuccess: boolean) {

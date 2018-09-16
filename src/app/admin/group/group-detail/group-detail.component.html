@@ -1,0 +1,70 @@
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Groups</span>
+    <h3 class="page-title">Details</h3>
+  </div>
+</div>
+<!-- Group Details -->
+<div class="row" *ngIf="group">
+  <div class="col-lg-8">
+    <div class="card card-small mb-4">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="text-muted">Name</h6>
+                  <p>{{group.name}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted">Type</h6>
+                  <p [ngSwitch]="group.type">
+                    <span *ngSwitchCase="groupType.Company">Company</span>
+                    <span *ngSwitchCase="groupType.CC">CC</span>
+                    <span *ngSwitchCase="groupType.SoleProprietor">Sole Proprietor</span>
+                    <span *ngSwitchCase="groupType.Partnership">Partnership</span>
+                    <span *ngSwitchCase="groupType.Trust">Trust</span>
+                    <span *ngSwitchCase="groupType.Union">Union</span>
+                    <span *ngSwitchCase="groupType.BurialSociety">Burial Society</span>
+                    <span *ngSwitchCase="groupType.FuneralParlour">Funeral Parlour</span>
+                    <span *ngSwitchCase="groupType.Church">Church</span>
+                    <span *ngSwitchCase="groupType.Other">Other</span>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted">Policy Number</h6>
+                  <p>{{group.policyNumber}}</p>
+                </div>
+                <div class="col-md-6">
+                  <div class="row mb-4 mb-md-0">
+                    <div class="col-6">
+                      <h6 class="text-muted">Members</h6>
+                      <i class="material-icons dropdown-menu-item mr-1">people</i> 22
+                    </div>
+                    <div class="col-6">
+                      <h6 class="text-muted">Users</h6>
+                      <i class="material-icons dropdown-menu-item mr-1">people</i> 10
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted">Industry</h6>
+                  <p>{{group.industry}}</p>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted">Last Updated</h6>
+                  <p>{{group.dateModified | date:'medium'}}</p>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-accent float-right" routerLink="/admin/group/edit/{{group.id}}">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

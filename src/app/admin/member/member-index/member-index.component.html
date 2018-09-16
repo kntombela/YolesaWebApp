@@ -6,7 +6,7 @@
         <i class="material-icons mr-1">add</i>New
       </a>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isEditActive}" [hidden]="!crud.isEditActive"
-        [routerLink]="['/admin/member/detail']">
+      routerLink="/admin/member/edit/{{crud.selected}}">
         <i class="material-icons mr-1">edit</i>Edit
       </button>
       <button class="btn btn-crud-primary" [ngClass]="{'d-none d-md-inline': crud.isDeleteActive}" [hidden]="!crud.isDeleteActive"
@@ -22,7 +22,7 @@
           <span class="fa fa-ellipsis-v"></span>
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" [hidden]="!crud.isEditActive" [routerLink]="['/admin/member/detail']">
+          <a class="dropdown-item" [hidden]="!crud.isEditActive" routerLink="/admin/member/edit/{{crud.selected}}">
             <i class="material-icons mr-1">edit</i>Edit
           </a>
           <a class="dropdown-item" href="#" [hidden]="!crud.isDeleteActive" data-toggle="modal" data-target="#deleteModal">
@@ -76,7 +76,7 @@
                   [(ngModel)]="crud.checkboxes.items[member.id]">
               </td>
               <td>{{i+1}}</td>
-              <td [ngSwitch]="member.title">
+              <td [ngSwitch]="member.title" class="detail-link" routerLink="/admin/member/detail/{{member.id}}">
                 <span *ngSwitchCase="0">Adv</span>
                 <span *ngSwitchCase="1">Dr</span>
                 <span *ngSwitchCase="2">Hon</span>
@@ -96,7 +96,7 @@
                 <span class="fa fa-ellipsis-v row-options" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                   aria-expanded="false"></span>
                 <div class="dropdown-menu dropdown-menu-small">
-                  <a class="dropdown-item" routerLink="/admin/member/detail/{{member.id}}">
+                  <a class="dropdown-item" routerLink="/admin/member/edit/{{member.id}}">
                     <i class="material-icons dropdown-menu-item mr-1">edit</i> Edit
                   </a>
                   <a class="dropdown-item" href="#">

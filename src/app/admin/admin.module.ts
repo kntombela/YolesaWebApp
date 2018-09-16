@@ -14,6 +14,14 @@ import { MessageComponent } from './components/messages/message/message.componen
 import { ProfileComponent } from './profile/profile.component';
 import { GroupIndexComponent } from './group/group-index/group-index.component';
 import { MemberIndexComponent } from './member/member-index/member-index.component';
+import { GroupDetailComponent } from './group/group-detail/group-detail.component';
+import { GroupNewComponent } from './group/group-new/group-new.component';
+import { MemberDetailComponent } from './member/member-detail/member-detail.component';
+import { MemberNewComponent } from './member/member-new/member-new.component';
+import { GroupTypeEnumPipe } from './shared/group-type-enum.pipe';
+import { GroupEditComponent } from './group/group-edit/group-edit.component';
+import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
 
 @NgModule({
   imports: [
@@ -31,7 +39,7 @@ import { MemberIndexComponent } from './member/member-index/member-index.compone
     LeadNewComponent, 
     MessageComponent, 
     ProfileComponent, 
-    GroupIndexComponent, MemberIndexComponent
+    GroupIndexComponent, MemberIndexComponent, GroupDetailComponent, GroupNewComponent, MemberDetailComponent, MemberNewComponent, GroupTypeEnumPipe, GroupEditComponent, LeadEditComponent, MemberEditComponent
   ]
 })
 export class AdminModule { }

@@ -1,0 +1,108 @@
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle">Members</span>
+    <h3 class="page-title">Edit</h3>
+  </div>
+</div>
+<!-- Member Forms -->
+<div class="row" *ngIf="member">
+  <div class="col-lg-8">
+    <div class="card card-small mb-4">
+      <div class="card-header">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#general">General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#employment">Employment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#health">Health</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#address">Address</a>
+          </li>
+        </ul>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item p-3">
+          <div class="row">
+            <div class="col">
+              <!-- Tabbed Content -->
+              <div id="tabMemberContent" class="tab-content">
+                <!-- General Tab -->
+                <div class="tab-pane fade show active" id="general">
+                  <form>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="txtName">Name</label>
+                        <input [(ngModel)]="member.fullNames" class="form-control" id="txtName" name="name" placeholder="Name" />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="txtSurname">Surname</label>
+                        <input [(ngModel)]="member.surname" class="form-control" id="txtSurname" name="surname"
+                          placeholder="Surname" />
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-md-6">
+                        <label for="cbGender">Gender</label>
+                        <select id="cbGender" class="form-control" name="status" [(ngModel)]="member.gender">
+                          <option selected>Choose...</option>
+                          <option *ngFor="let g of gender | groupTypeEnum" [value]="g.key">{{g.value}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="txtDOB">DOB</label>
+                        <input type="date" [(ngModel)]="member.dateOfBirth" class="form-control" id="txtDOB" name="dob"
+                          placeholder="1991-06-06" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtID">SA ID Number</label>
+                      <input [(ngModel)]="member.idNumber" class="form-control" id="txtID" name="id" placeholder="0000000000000" />
+                    </div>
+                  </form>
+                </div>
+                <!-- Employment Tab -->
+                <div class="tab-pane fade" id="employment">
+                  <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+                    Exercitation +1 labore
+                    velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
+                    beer twee. Qui
+                    photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+                    PBR. Homo
+                    nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                </div>
+                <!-- Health Tab -->
+                <div class="tab-pane fade" id="health">
+                  <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo
+                    retro fanny pack
+                    lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
+                    skateboard locavore
+                    carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid
+                    8-bit cred
+                    pitchfork.</p>
+                </div>
+                <!-- Address Tab -->
+                <div class="tab-pane fade" id="address">
+                  <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+                    master cleanse
+                    gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party
+                    locavore wolf cliche
+                    high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                    farm-to-table VHS
+                    viral locavore cosby sweater.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="card-footer text-right">
+        <button class="btn btn-accent" (click)="update()">Update Member</button>
+      </div>
+    </div>
+  </div>
+</div>

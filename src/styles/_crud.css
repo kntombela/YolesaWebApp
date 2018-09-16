@@ -43,3 +43,12 @@
   color: gray;
   cursor: pointer;
 }
+
+.detail-link {
+  color: inherit;
+}
+
+.detail-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

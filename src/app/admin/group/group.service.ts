@@ -37,6 +37,39 @@ export class GroupService {
     );  
   }
 
+  /** GET: Get group by id*/
+  getGroup(id: number): Observable<Group> {
+    return this.http.get<Group>(this.accessPointUrl + '/' + id, httpOptions)
+    .pipe(
+      tap(),
+      catchError(this.handleError<Group>('getGroup'))
+    );  
+  }
+
+  /** PUT: */
+  update(group: Group): Observable<any> {
+    return this.http.put(this.accessPointUrl + '/' + group.id, group, httpOptions) 
+    .pipe(
+        tap(_ => this.log(`updated group id=${group.id}`, true)),
+        catchError(this.handleError<any>('updateGroup')) 
+      );
+  }
+
+  /** POST: */
+  add (group: Group): Observable<Group> {
+    return this.http.post<Group>(this.accessPointUrl, group, httpOptions).pipe(
+      tap((group: Group) => this.log(`added group w/ id=${group.id}`, true)),
+      catchError(this.handleError<Group>('addGroup'))
+    );
+  }
+
+  /** POST: */
+  delete (ids: any[]): Observable<any> {
+    return this.http.post<any[]>(this.accessPointUrl + '/delete', ids , httpOptions).pipe(
+      tap(_ => this.log(`deleted groups`, true)),
+      catchError(this.handleError<Group>('deleteGroup'))
+    );
+  }
 
   /******************** Private Helpers ********************/
   private log(message: string, isSuccess: boolean) {

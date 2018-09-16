@@ -3,7 +3,7 @@ export class CrudUtil {
     isDeleteActive: boolean = false;
     checkboxes = { 'checked': false, items: {} };
     data: any[];
-    selected: string;
+    selected: number;
 
     constructor(data: any[]) {
         this.data = data;
@@ -16,6 +16,7 @@ export class CrudUtil {
         else {
             // Set item checked
             this.checkboxes.items[id] = value;
+            this.selected = id;
         }
         this.setCrudActions(this.getSelectedItemCount());
     }
@@ -25,8 +26,7 @@ export class CrudUtil {
             if (row != null) {
                 this.checkboxes.items[row.id] = value;
             }
-        })
-        this.selected = JSON.stringify(this.checkboxes.items);
+        })       
         this.setCrudActions(this.getSelectedItemCount());
     }
 
