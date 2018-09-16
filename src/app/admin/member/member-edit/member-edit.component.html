@@ -21,6 +21,9 @@
             <a class="nav-link" data-toggle="tab" href="#health">Health</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#debt">Debt</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#address">Address</a>
           </li>
         </ul>
@@ -34,6 +37,13 @@
                 <!-- General Tab -->
                 <div class="tab-pane fade show active" id="general">
                   <form>
+                    <div class="form-group">
+                      <label for="cbTitke">Title</label>
+                      <select id="cbTitke" class="form-control" name="title" [(ngModel)]="member.title">
+                        <option selected>Choose...</option>
+                        <option *ngFor="let t of title | groupTypeEnum" [value]="t.key">{{t.value}}</option>
+                      </select>
+                    </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="txtName">Name</label>
@@ -60,40 +70,124 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <fieldset class="form-group">
+                        <label>Is South African Citizen?</label>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="true" name="citizen" [(ngModel)]="member.isSACitizen">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="false" name="citizen" [(ngModel)]="member.isSACitizen">
+                            No
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="form-group" [hidden]="!member.isSACitizen">
                       <label for="txtID">SA ID Number</label>
                       <input [(ngModel)]="member.idNumber" class="form-control" id="txtID" name="id" placeholder="0000000000000" />
+                    </div>
+                    <div class="form-group" [hidden]="member.isSACitizen">
+                      <label for="txtCountry">Country</label>
+                      <input [(ngModel)]="member.country" class="form-control" id="txtCountry" name="id" placeholder="0000000000000" />
+                    </div>
+                    <div class="form-group" [hidden]="member.isSACitizen">
+                      <label for="txtpassport">Passport Number</label>
+                      <input [(ngModel)]="member.passportNumber" class="form-control" id="txtpassport" name="id"
+                        placeholder="0000000000000" />
                     </div>
                   </form>
                 </div>
                 <!-- Employment Tab -->
                 <div class="tab-pane fade" id="employment">
-                  <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-                    Exercitation +1 labore
-                    velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
-                    beer twee. Qui
-                    photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
-                    PBR. Homo
-                    nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                  <form>
+                    <div class="form-group">
+                      <fieldset class="form-group">
+                        <label>Is Employed?</label>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="true" name="employed" [(ngModel)]="member.isEmployed">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="false" name="employed" [(ngModel)]="member.isEmployed">
+                            No
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="txtEmployer">Employer</label>
+                        <input [(ngModel)]="member.employer" class="form-control" id="txtEmployer" name="employer"
+                          placeholder="Employer Name" [attr.disabled]="!member.isEmployed ? '' : null" />
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="txtSurname">Employer Contact</label>
+                        <input [(ngModel)]="member.employerContactNumber" class="form-control" id="txtSurname" name="employer"
+                          placeholder="Employer Contact" [attr.disabled]="!member.isEmployed ? '' : null" />
+                      </div>
+                    </div>
+                  </form>
                 </div>
                 <!-- Health Tab -->
                 <div class="tab-pane fade" id="health">
-                  <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo
-                    retro fanny pack
-                    lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
-                    skateboard locavore
-                    carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid
-                    8-bit cred
-                    pitchfork.</p>
+                  <form>
+                    <div class="form-group">
+                      <fieldset class="form-group">
+                        <label>Has Chronic Illness?</label>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="true" name="illness" [(ngModel)]="member.hasChronicIllness">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="false" name="illness" [(ngModel)]="member.hasChronicIllness">
+                            No
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtIllnessDetails">Illness Details</label>
+                      <textarea [(ngModel)]="member.chronicIllnessDetails" class="form-control" id="txtIllnessDetails"
+                        name="illnessDetails" rows="3" [attr.disabled]="!member.hasChronicIllness ? '' : null"></textarea>
+                    </div>
+                  </form>
                 </div>
-                <!-- Address Tab -->
-                <div class="tab-pane fade" id="address">
-                  <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
-                    master cleanse
-                    gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party
-                    locavore wolf cliche
-                    high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                    farm-to-table VHS
-                    viral locavore cosby sweater.</p>
+                <!-- Debt Tab -->
+                <div class="tab-pane fade" id="debt">
+                  <form>
+                    <div class="form-group">
+                      <fieldset class="form-group">
+                        <label>Is Under Debt Review?</label>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="true" name="debt" [(ngModel)]="member.isUnderDebtReview">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" [value]="false" name="debt" [(ngModel)]="member.isUnderDebtReview">
+                            No
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtDebtDetails">Debt Details</label>
+                      <textarea [(ngModel)]="member.debtDetails" class="form-control" id="txtDebtDetails" name="debtDetails"
+                        rows="3" [attr.disabled]="!member.isUnderDebtReview ? '' : null"></textarea>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

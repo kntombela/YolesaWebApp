@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '../member.service';
 import { Location } from '@angular/common';
 import { Gender } from '../genderEnum';
+import { Title } from '../titleEnum';
 
 @Component({
   selector: 'app-member-edit',
@@ -14,6 +15,7 @@ export class MemberEditComponent implements OnInit {
 
   @Input() member: Member;
   gender = Gender;
+  title = Title;
 
   constructor(
     private route: ActivatedRoute,
