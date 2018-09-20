@@ -18,10 +18,11 @@ import { GroupDetailComponent } from './group/group-detail/group-detail.componen
 import { GroupNewComponent } from './group/group-new/group-new.component';
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { MemberNewComponent } from './member/member-new/member-new.component';
-import { GroupTypeEnumPipe } from './shared/group-type-enum.pipe';
 import { GroupEditComponent } from './group/group-edit/group-edit.component';
 import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { AddressEditComponent } from './address/address-edit/address-edit.component';
+import { EnumPipe } from './shared/pipes/enum.pipe';
 
 @NgModule({
   imports: [
@@ -39,7 +40,17 @@ import { MemberEditComponent } from './member/member-edit/member-edit.component'
     LeadNewComponent, 
     MessageComponent, 
     ProfileComponent, 
-    GroupIndexComponent, MemberIndexComponent, GroupDetailComponent, GroupNewComponent, MemberDetailComponent, MemberNewComponent, GroupTypeEnumPipe, GroupEditComponent, LeadEditComponent, MemberEditComponent
+    GroupIndexComponent, 
+    MemberIndexComponent, 
+    GroupDetailComponent, 
+    GroupNewComponent, 
+    MemberDetailComponent, 
+    MemberNewComponent, 
+    GroupEditComponent, 
+    LeadEditComponent, 
+    MemberEditComponent, 
+    AddressEditComponent, 
+    EnumPipe
   ]
 })
 export class AdminModule { }

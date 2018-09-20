@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'groupTypeEnum'
+  name: 'enum'
 })
-export class GroupTypeEnumPipe implements PipeTransform {
+export class EnumPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     let items: any[] = [];

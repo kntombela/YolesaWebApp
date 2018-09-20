@@ -23,7 +23,7 @@
                     <label for="cbType">Type</label>
                     <select id="cbType" class="form-control" name="status" [(ngModel)]="group.type">
                       <option selected>Choose...</option>
-                      <option *ngFor="let g of groupType | groupTypeEnum" [value]="g.key">{{g.value}}</option>
+                      <option *ngFor="let g of groupType | enum" [value]="g.key">{{g.value}}</option>
                     </select>
                   </div>
                 </div>

@@ -41,7 +41,7 @@
                       <label for="cbTitke">Title</label>
                       <select id="cbTitke" class="form-control" name="title" [(ngModel)]="member.title">
                         <option selected>Choose...</option>
-                        <option *ngFor="let t of title | groupTypeEnum" [value]="t.key">{{t.value}}</option>
+                        <option *ngFor="let t of title | enum" [value]="t.key">{{t.value}}</option>
                       </select>
                     </div>
                     <div class="form-row">
@@ -60,7 +60,7 @@
                         <label for="cbGender">Gender</label>
                         <select id="cbGender" class="form-control" name="status" [(ngModel)]="member.gender">
                           <option selected>Choose...</option>
-                          <option *ngFor="let g of gender | groupTypeEnum" [value]="g.key">{{g.value}}</option>
+                          <option *ngFor="let g of gender | enum" [value]="g.key">{{g.value}}</option>
                         </select>
                       </div>
                       <div class="form-group col-md-6">
@@ -186,6 +186,87 @@
                       <label for="txtDebtDetails">Debt Details</label>
                       <textarea [(ngModel)]="member.debtDetails" class="form-control" id="txtDebtDetails" name="debtDetails"
                         rows="3" [attr.disabled]="!member.isUnderDebtReview ? '' : null"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <!-- Address Tab -->
+                <div class="tab-pane fade" id="address">
+                  <div class="btn-group btn-group-toggle mb-3">
+                    <label class="btn btn-white" [ngClass]="{'active': at == addressType.Residential}">
+                      <input type="radio" class="form-check-input" [value]="addressType.Residential" name="type"
+                        [(ngModel)]="at" (change)="getAddress(memberId, at)"> Residential </label>
+                    <label class="btn btn-white" [ngClass]="{'active': at == addressType.Postal}">
+                      <input type="radio" class="form-check-input" [value]="addressType.Postal" name="type"
+                        [(ngModel)]="at" (change)="getAddress(memberId, at)"> Postal </label>
+                  </div>
+                  <form [hidden]="at != addressType.Residential">
+                    <div class="form-group">
+                      <label for="txtAddressLine1">Address Line 1</label>
+                      <input type="text" class="form-control" id="txtAddressLine1" name="addressLine1" [(ngModel)]="address.addressLine1">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtAddressLine2">Address Line 2</label>
+                      <input type="text" class="form-control" id="txtAddressLine2" name="addressLine2" [(ngModel)]="address.addressLine2">
+                    </div>
+                    <div class="form-group" [hidden]="true">
+                      <label for="txtAddressLine3">Address Line 3</label>
+                      <input type="text" class="form-control" id="txtAddressLine3" name="addressLine3" [(ngModel)]="address.addressLine3">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtSuburb">Suburb</label>
+                      <input type="text" class="form-control" id="txtSuburb" name="suburb" [(ngModel)]="address.suburb">
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="txtCity">City</label>
+                        <input type="text" class="form-control" id="txtCity" name="city" [(ngModel)]="address.city">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="txtProvince">Province</label>
+                        <select id="txtProvince" class="form-control">
+                          <option selected>Choose...</option>
+                          <option>...</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="txtZip">Zip</label>
+                        <input type="text" class="form-control" id="txtZip" name="zip" [(ngModel)]="address.postalCode">
+                      </div>
+                    </div>
+                  </form>
+                  <form [hidden]="at == addressType.Residential">
+                    <div class="form-group">
+                      <label for="txtAddressLine1">Address Line 1 / P.O. Number</label>
+                      <input type="text" class="form-control" id="txtAddressLine1" name="addressLine1" [(ngModel)]="address.addressLine1">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtAddressLine2">Address Line 2</label>
+                      <input type="text" class="form-control" id="txtAddressLine2" name="addressLine2" [(ngModel)]="address.addressLine2">
+                    </div>
+                    <div class="form-group" [hidden]="true">
+                      <label for="txtAddressLine3">Address Line 3</label>
+                      <input type="text" class="form-control" id="txtAddressLine3" name="addressLine3" [(ngModel)]="address.addressLine3">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtSuburb">Suburb</label>
+                      <input type="text" class="form-control" id="txtSuburb" name="suburb" [(ngModel)]="address.suburb">
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="txtCity">City</label>
+                        <input type="text" class="form-control" id="txtCity" name="city" [(ngModel)]="address.city">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="txtProvince">Province</label>
+                        <select id="txtProvince" class="form-control">
+                          <option selected>Choose...</option>
+                          <option>...</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="txtZip">Zip</label>
+                        <input type="text" class="form-control" id="txtZip" name="zip" [(ngModel)]="address.postalCode">
+                      </div>
                     </div>
                   </form>
                 </div>
