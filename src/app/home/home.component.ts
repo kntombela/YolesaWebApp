@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     status: 0
   };
 
-  constructor(private auth: AuthService, private leadService: LeadService) { }
+  constructor(public auth: AuthService, private leadService: LeadService) { }
 
   ngOnInit() {
     $('.cd100').countdown100({

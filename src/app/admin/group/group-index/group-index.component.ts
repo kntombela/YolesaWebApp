@@ -2,6 +2,7 @@ import { GroupService } from './../group.service';
 import { Group } from './../group';
 import { Component, OnInit } from '@angular/core';
 import { CrudUtil } from '../../shared/utils/crudUtil';
+declare var $: any;
 
 @Component({
   selector: 'app-group-index',
@@ -33,7 +34,15 @@ export class GroupIndexComponent implements OnInit {
     this.crud.checkRow(value, id);
   }
 
-  refresh(){
+  refresh() {
     this.getGroups();
+  }
+
+  delete(): void {
+    this.groupService.delete(this.crud.getSelectedItemIds()).subscribe(response => {
+      this.getGroups(); //Refresh of data can only happen once data is available => async
+    });
+    $('#deleteModal').modal('hide');
+    this.crud.resetSelectedItems();
   }
 }

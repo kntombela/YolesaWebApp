@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudUtil } from '../../shared/utils/crudUtil';
 import { Member } from '../member';
 import { GroupService } from '../../group/group.service';
+declare var $: any;
 
 @Component({
   selector: 'app-member-index',
@@ -50,5 +51,13 @@ export class MemberIndexComponent implements OnInit {
 
   refresh() {
     this.getMembers();
+  }
+
+  delete(): void {
+    this.memberService.delete(this.crud.getSelectedItemIds()).subscribe(response => {
+      this.getMembers(); //Refresh of data can only happen once data is available => async
+    });
+    $('#deleteModal').modal('hide');
+    this.crud.resetSelectedItems();
   }
 }

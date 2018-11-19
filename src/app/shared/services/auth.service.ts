@@ -18,7 +18,7 @@ export class AuthService {
     domain: 'yolesa.auth0.com',
     responseType: 'token id_token',
     audience: 'https://yolesa.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'http://localhost/YolesaWebApp/callback',
     scope: 'openid profile'
   });
 
@@ -76,10 +76,10 @@ export class AuthService {
 
     const self = this;
     this.auth0.client.userInfo(accessToken, (err, profile) => {
-      if (profile) {      
+      if (profile) {
         self.user = new User(profile);
         self.isAdmin = self.user.checkAdmin();
-        console.log(JSON.stringify(self.user)); //TODO: Remove 
+        console.log(JSON.stringify(self.user)); // TODO: Remove 
       }
       cb(err, profile);
     });
