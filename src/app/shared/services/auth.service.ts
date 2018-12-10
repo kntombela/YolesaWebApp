@@ -1,87 +1,124 @@
-import { User } from './../../admin/shared/user';
 import { Injectable } from '@angular/core';
-import * as auth0 from 'auth0-js';
 import { Router } from '@angular/router';
-
-const LOGOUT_URI = 'https://yolesa.auth0.com/v2/logout?returnTo=http://localhost:4200';
+import { BehaviorSubject } from 'rxjs';
+import * as auth0 from 'auth0-js';
+import { AUTH_CONFIG } from 'src/app/auth/auth.config';
+import { ENV } from 'src/app/core/env.config';
 
 @Injectable()
-
 export class AuthService {
-
-  userProfile: any;
-  user: User;
-  isAdmin: boolean;
-
-  auth0 = new auth0.WebAuth({
-    clientID: 'VcWNz2N1x48Et4hS3Jd8Z4h5IhQP1jMB',
-    domain: 'yolesa.auth0.com',
-    responseType: 'token id_token',
-    audience: 'https://yolesa.auth0.com/userinfo',
-    redirectUri: 'http://localhost/YolesaWebApp/callback',
-    scope: 'openid profile'
+  // Create Auth0 web auth instance
+  private _auth0 = new auth0.WebAuth({
+    clientID: AUTH_CONFIG.CLIENT_ID,
+    domain: AUTH_CONFIG.CLIENT_DOMAIN,
+    responseType: AUTH_CONFIG.RESPONSE_TYPE,
+    audience: AUTH_CONFIG.AUDIENCE,
+    redirectUri: AUTH_CONFIG.REDIRECT,
+    scope: AUTH_CONFIG.SCOPE
   });
+  accessToken: string;
+  userProfile: any;
+  userMetaData: any;
+  expiresAt: number;
+  isAdmin: boolean;
+  // Create a stream of logged in status to communicate throughout app
+  loggedIn: boolean;
+  loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+  loggingIn: boolean;
 
   constructor(private router: Router) {
-
+    // If app auth token is not expired, request new token
+    if (JSON.parse(localStorage.getItem('expires_at')) > Date.now()) {
+      this.renewToken();
+    }
   }
 
-  public login(): void {
-    this.auth0.authorize();
+  setLoggedIn(value: boolean) {
+    // Update login status subject
+    this.loggedIn$.next(value);
+    this.loggedIn = value;
   }
 
-  public handleAuthentication(): void {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
+  login() {
+    // Auth0 authorize request
+    this._auth0.authorize();
+  }
+
+  handleAuth() {
+    // When Auth0 hash parsed, get profile
+    this._auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken) {
         window.location.hash = '';
-        this.setSession(authResult);
+        this._getProfile(authResult);
         this.router.navigate(['/admin']);
       } else if (err) {
         this.router.navigate(['/home']);
-        console.log(err);
+        console.error(`Error authenticating: ${err.error}`);
       }
     });
   }
 
-  private setSession(authResult): void {
-    // Set the time that the Access Token will expire at
-    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
-  }
-
-  public logout(): void {
-    // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    // Redirect to logout API of Auth0 Note you must add the returnTo URL to 
-    // the Allowed Logout URLs list in the Advanced tab of your Tenant Settings.
-    window.location.href = LOGOUT_URI;
-  }
-
-  public isAuthenticated(): boolean {
-    // Check whether the current time is past the
-    // Access Token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    return new Date().getTime() < expiresAt;
-  }
-
-  public getProfile(cb): void {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('Access Token must exist to fetch profile');
-    }
-
-    const self = this;
-    this.auth0.client.userInfo(accessToken, (err, profile) => {
+  private _getProfile(authResult) {
+    this.loggingIn = true;
+    // Use access token to retrieve user's profile and set session
+    this._auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if (profile) {
-        self.user = new User(profile);
-        self.isAdmin = self.user.checkAdmin();
-        console.log(JSON.stringify(self.user)); // TODO: Remove 
+        this._setSession(authResult, profile);
+      } else if (err) {
+        console.warn(`Error retrieving profile: ${err.error}`);
       }
-      cb(err, profile);
     });
+  }
+
+  private _setSession(authResult, profile?) {
+    this.expiresAt = (authResult.expiresIn * 1000) + Date.now();
+    // Store expiration in local storage to access in constructor
+    localStorage.setItem('expires_at', JSON.stringify(this.expiresAt));
+    this.accessToken = authResult.accessToken;
+    // If initial login, set profile and admin information
+    if (profile) {
+      this.userProfile = profile;
+      this.isAdmin = this._checkAdmin(profile);  
+    }
+    // Update login status in loggedIn$ stream
+    this.setLoggedIn(true);
+    this.loggingIn = false;
+  }
+
+  private _clearExpiration() {
+    // Remove token expiration from localStorage
+    localStorage.removeItem('expires_at');
+  }
+
+  logout() {
+    // Remove data from localStorage
+    this._clearExpiration();
+    // End Auth0 authentication session
+    this._auth0.logout({
+      clientId: AUTH_CONFIG.CLIENT_ID,
+      returnTo: ENV.BASE_URI
+    });
+  }
+
+  get tokenValid(): boolean {
+    // Check if current time is past access token's expiration
+    return Date.now() < JSON.parse(localStorage.getItem('expires_at'));
+  }
+
+  renewToken() {
+    // Check for valid Auth0 session
+    this._auth0.checkSession({}, (err, authResult) => {
+      if (authResult && authResult.accessToken) {
+        this._getProfile(authResult);
+      } else {
+        this._clearExpiration();
+      }
+    });
+  }
+
+  private _checkAdmin(profile) {
+    // Check if the user has admin role
+    const roles = profile[AUTH_CONFIG.ROLE_NAMESPACE] || [];
+    return roles.indexOf('admin') > -1;
   }
 }

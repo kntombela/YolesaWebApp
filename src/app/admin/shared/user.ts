@@ -1,5 +1,4 @@
-const PROFILE_NAMESPACE = 'http://myapp.com/profile';
-const ROLES_NAMESPACE = 'http://myapp.com/roles';
+import { AUTH_CONFIG } from "src/app/auth/auth.config";
 
 export class User {
     general: any;
@@ -11,8 +10,8 @@ export class User {
     }
 
     private setUserProfile(profile): void {
-        this.user_metadata = profile[PROFILE_NAMESPACE] || {};
-        this.roles = profile[ROLES_NAMESPACE] || {};
+        this.user_metadata = profile[AUTH_CONFIG.PROFILE_NAMESPACE] || {};
+        this.roles = profile[AUTH_CONFIG.ROLE_NAMESPACE] || {};
         this.general = profile || {};
     }
 

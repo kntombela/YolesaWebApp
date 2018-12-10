@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { GroupType } from './../groupTypeEnum';
 import { GroupService } from './../group.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -12,16 +13,19 @@ import { Location } from '@angular/common';
 })
 export class GroupDetailComponent implements OnInit {
 
+  pageTitle = 'Group Detail';
   @Input() group: Group;
   groupType = GroupType;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private groupService: GroupService,
     private location: Location
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.getGroup();
   }
 

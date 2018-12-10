@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { CrudUtil } from './../../shared/utils/crudUtil';
 import { Checkboxes } from './../../shared/checkboxes';
 import { Location } from '@angular/common';
@@ -18,11 +19,13 @@ export class LeadIndexComponent implements OnInit {
   crud = new CrudUtil(this.leads);
 
   constructor(
+    private title: Title,
     private leadService: LeadService,
     location: Location
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.getLeads();
   }
 

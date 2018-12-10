@@ -2,6 +2,7 @@ import { GroupService } from './../group.service';
 import { Group } from './../group';
 import { Component, OnInit } from '@angular/core';
 import { CrudUtil } from '../../shared/utils/crudUtil';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -11,13 +12,14 @@ declare var $: any;
 })
 export class GroupIndexComponent implements OnInit {
 
-  pageTitle = 'Group';
+  pageTitle = 'Group Index';
   groups: Group[];
   crud = new CrudUtil(this.groups);
 
-  constructor(private groupService: GroupService) { }
+  constructor(private title: Title, private groupService: GroupService) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.getGroups();
   }
 

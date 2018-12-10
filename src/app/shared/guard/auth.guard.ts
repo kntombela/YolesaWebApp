@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.auth.isAuthenticated()) {
+    if (this.auth.tokenValid) {
       return true;
     }
     this.auth.login();

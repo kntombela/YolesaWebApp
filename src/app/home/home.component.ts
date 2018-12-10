@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Lead } from './../admin/lead/lead';
 import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,6 +13,7 @@ declare var $: any;
 })
 export class HomeComponent implements OnInit {
 
+  pageTitle = 'Home';
   message: string;
   lead: Lead = {
     id: undefined,
@@ -22,9 +24,14 @@ export class HomeComponent implements OnInit {
     status: 0
   };
 
-  constructor(public auth: AuthService, private leadService: LeadService) { }
+  constructor(
+    private title: Title,
+    public auth: AuthService,
+    private leadService: LeadService
+  ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     $('.cd100').countdown100({
       /*Set Endtime here*/
       /*Endtime must be > current time*/

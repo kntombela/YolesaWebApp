@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { STATUS } from './../../shared/status';
 import { LeadService } from './../lead.service';
 import { Lead } from './../lead';
@@ -12,16 +13,19 @@ import { Location } from '@angular/common';
 })
 export class LeadDetailComponent implements OnInit {
 
+  pageTitle = 'Lead Detail';
   @Input() lead: Lead;
   status = STATUS;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private leadService: LeadService,
     private location: Location
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.getLead();
   }
 

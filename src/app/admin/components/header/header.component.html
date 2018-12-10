@@ -48,8 +48,8 @@
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <img class="user-avatar rounded-circle mr-2" src="{{ profile?.picture }}" alt="User Avatar">
-        <span class="d-none d-md-inline-block">{{ profile?.nickname | titlecase }}</span>
+        <img class="user-avatar rounded-circle mr-2" src="{{ auth.userProfile?.picture }}" alt="User Avatar">
+        <span class="d-none d-md-inline-block">{{ auth.userProfile?.nickname | titlecase }}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-small">
         <a class="dropdown-item" href="user-profile-lite.html">
@@ -59,7 +59,7 @@
         <a class="dropdown-item" href="add-new-post.html">
           <i class="material-icons">note_add</i> Add New Post</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item text-danger" href="javascript:void(0);" (click)="logout()">
+        <a class="dropdown-item text-danger" href="javascript:void(0);" (click)="auth.logout()">
           <i class="material-icons text-danger">&#xE879;</i> Logout </a>
       </div>
     </li>

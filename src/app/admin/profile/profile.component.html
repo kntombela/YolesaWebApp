@@ -11,9 +11,9 @@
     <div class="card card-small mb-4 pt-3">
       <div class="card-header border-bottom text-center">
         <div class="mb-3 mx-auto">
-          <img class="rounded-circle" src="{{user.general.picture}}" alt="User Avatar" width="110"> </div>
-        <h4 class="mb-0">{{user.user_metadata.first_name | titlecase}}</h4>
-        <span class="text-muted d-block mb-2">{{ user.user_metadata.designation }}</span>
+          <img class="rounded-circle" src="{{ auth.userProfile?.picture }}" alt="User Avatar" width="110"> </div>
+        <h4 class="mb-0">{{ user_metadata.first_name | titlecase }}</h4>
+        <span class="text-muted d-block mb-2">{{ user_metadata.designation }}</span>
         <div>
           <p class="text_muted d-inline">Verified</p>
           <i class="fa fa-check-circle ml-1 d-inline" style="color:green"></i>
@@ -28,7 +28,7 @@
           </a>
         </li>
         <li class="list-group-item p-4">
-          <span class="small float-right">Last Updated: {{user.general.updated_at | date:'medium'}}</span>
+          <span class="small float-right">Last Updated: {{ auth.userProfile.updated_at | date:'medium' }}</span>
         </li>
       </ul>
     </div>
@@ -47,25 +47,25 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="feName">Name</label>
-                    <input type="text" class="form-control" id="feName" placeholder="Name" [(ngModel)]="user.user_metadata.first_name" name="first_name">
+                    <input type="text" class="form-control" id="feName" placeholder="Name" [(ngModel)]="user_metadata.first_name" name="first_name">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="feSurname">Surname</label>
-                    <input type="text" class="form-control" id="feSurname" placeholder="Surname" [(ngModel)]="user.user_metadata.surname" name="surname">
+                    <input type="text" class="form-control" id="feSurname" placeholder="Surname" [(ngModel)]="user_metadata.surname" name="surname">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="feDesignation">Designation</label>
-                  <input type="text" class="form-control" id="feDesignation" placeholder="Project Manager" [(ngModel)]="user.user_metadata.designation" name="designation">
+                  <input type="text" class="form-control" id="feDesignation" placeholder="Project Manager" [(ngModel)]="user_metadata.designation" name="designation">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="feEmail">Designation</label>
-                    <input type="email" class="form-control" id="feEmail" placeholder="themba@gmail.com" [(ngModel)]="user.general.name" name="email">
+                    <label for="feEmail">Email</label>
+                    <input type="email" class="form-control" id="feEmail" placeholder="themba@gmail.com" [(ngModel)]="auth.userProfile.name" name="email">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="feContact">Cellphone Number</label>
-                    <input type="text" class="form-control" id="feContact" placeholder="0832000795" [(ngModel)]="user.user_metadata.contact" name="contact">
+                    <input type="text" class="form-control" id="feContact" placeholder="0832000795" [(ngModel)]="user_metadata.contact" name="contact">
                   </div>
                 </div>
                 <div class="form-group">

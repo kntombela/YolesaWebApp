@@ -1,8 +1,11 @@
 export class Lead {
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    status: number;
+    constructor(
+        public name: string = '',
+        public surname: string = '',
+        public email: string = '',
+        public phone: string = '',
+        public status: number = 0,
+        public id?: number,
+    ) { }
+
 }

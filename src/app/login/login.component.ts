@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  pageTitle = 'Login';
+
+  constructor(private title: Title, private auth: AuthService) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.auth.login();
   }
 

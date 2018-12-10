@@ -16,6 +16,7 @@ import { Address } from '../../address/address';
 })
 export class MemberEditComponent implements OnInit {
 
+  pageTitle = 'Edit Member';
   @Input() member: Member;
   @Input() address: Address;
   gender = Gender;

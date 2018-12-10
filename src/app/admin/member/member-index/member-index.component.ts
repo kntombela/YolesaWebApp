@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudUtil } from '../../shared/utils/crudUtil';
 import { Member } from '../member';
 import { GroupService } from '../../group/group.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -19,12 +20,14 @@ export class MemberIndexComponent implements OnInit {
   crud = new CrudUtil(this.members);
 
   constructor(
+    private title: Title,
     private memberService: MemberService,
     private groupService: GroupService,
     private auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
     this.getMembers();
   }
 
@@ -33,7 +36,7 @@ export class MemberIndexComponent implements OnInit {
       this.memberService.get()
         .subscribe(members => this.crud.data = members);
     } else {
-      this.groupService.getGroupByUserId(this.auth.user.general.sub)
+      this.groupService.getGroupByUserId(this.auth.userProfile.user_id)
         .subscribe(
           group => this.memberService.getMembersByGroupID(group.id)
             .subscribe(members => this.crud.data = members)
