@@ -1,8 +1,10 @@
 import { GroupService } from './../group.service';
 import { Group } from './../group';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CrudUtil } from '../../shared/utils/crudUtil';
 import { Title } from '@angular/platform-browser';
+import { UtilsService } from 'src/app/core/utils.service';
+import { Subscription } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -10,13 +12,18 @@ declare var $: any;
   templateUrl: './group-index.component.html',
   styleUrls: ['./group-index.component.css']
 })
-export class GroupIndexComponent implements OnInit {
+export class GroupIndexComponent implements OnInit, OnDestroy {
 
   pageTitle = 'Group Index';
   groups: Group[];
   crud = new CrudUtil(this.groups);
+  loading: boolean;
+  groupListSub: Subscription;
 
-  constructor(private title: Title, private groupService: GroupService) { }
+  constructor(
+    private title: Title,
+    private groupService: GroupService,
+    public utils: UtilsService, ) { }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
@@ -24,8 +31,13 @@ export class GroupIndexComponent implements OnInit {
   }
 
   getGroups(): void {
-    this.groupService.get()
-      .subscribe(groups => this.crud.data = groups);
+    this.loading = true;
+    this.groupListSub = this.groupService
+      .get()
+      .subscribe(groups => {
+        this.crud.data = groups;
+        this.loading = false;
+      });
   }
 
   onCheckAllRows(value) {
@@ -47,4 +59,9 @@ export class GroupIndexComponent implements OnInit {
     $('#deleteModal').modal('hide');
     this.crud.resetSelectedItems();
   }
+
+  ngOnDestroy() {
+    this.groupListSub.unsubscribe();
+  }
+
 }

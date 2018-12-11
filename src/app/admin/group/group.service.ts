@@ -24,7 +24,7 @@ export class GroupService {
     private auth: AuthService
   ) { } 
 
-  /** GET: Get all leads*/
+  /** GET: Get all groups*/
   public get(): Observable<Group[]> {
     return this.http.get<Group[]>(this.accessPointUrl, {
       headers: new HttpHeaders().set('Authorization', this._authHeader)

@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { LeadService } from './admin/lead/lead.service';
@@ -26,6 +27,7 @@ import { HeaderComponent } from './components/header/header.component';
     BrowserModule,
     HttpClientModule,
     AdminModule,
+    SharedModule,
     AppRoutingModule,
     FormsModule
   ],
