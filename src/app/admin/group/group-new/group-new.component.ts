@@ -24,12 +24,13 @@ export class GroupNewComponent implements OnInit {
     this.title.setTitle(this.pageTitle);
   }
 
-  add(group: Group): void {
-    this.groupService.add(group).subscribe(() => this.goBack());
+  add(group: Group) {
+    this.groupService
+      .add(group)
+      .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

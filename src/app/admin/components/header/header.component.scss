@@ -1,0 +1,10 @@
+$gray-600: #868e96 !default;
+
+.btn-primary-outline {
+	background-color: transparent;
+	border-color: transparent;
+	color: $gray-600;
+	&:hover {
+		cursor: pointer;
+	}
+}

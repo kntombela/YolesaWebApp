@@ -16,6 +16,7 @@ export class GroupDetailComponent implements OnInit {
   pageTitle = 'Group Detail';
   @Input() group: Group;
   groupType = GroupType;
+  loading: boolean;
 
   constructor(
     private title: Title,
@@ -26,12 +27,21 @@ export class GroupDetailComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getGroup();
+    this._getGroup();
   }
 
-  getGroup(): void {
+  private _getGroup() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.groupService.getGroup(id)
-      .subscribe(group => this.group = group);
+    this.groupService
+      .getGroup(id)
+      .subscribe(group => {
+        this.group = group,
+        this.loading = false;
+      });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

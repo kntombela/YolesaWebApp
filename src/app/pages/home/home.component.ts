@@ -1,9 +1,9 @@
 import { Title } from '@angular/platform-browser';
-import { Lead } from './../admin/lead/lead';
-import { AuthService } from './../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { LeadService } from '../admin/lead/lead.service';
-import { STATUS } from '../admin/shared/status';
+import { Lead } from 'src/app/admin/lead/lead';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { LeadService } from 'src/app/admin/lead/lead.service';
+
 declare var $: any;
 
 @Component({

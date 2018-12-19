@@ -19,19 +19,21 @@ export class LeadNewComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private leadService: LeadService, 
+    private leadService: LeadService,
     private location: Location
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
   }
 
-  add(lead: Lead): void {
-    this.leadService.add(lead).subscribe(() => this.goBack());
+  add(lead: Lead) {
+    this.leadService
+      .add(lead)
+      .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
 }

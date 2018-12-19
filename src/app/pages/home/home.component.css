@@ -3,12 +3,12 @@
 
 @font-face {
   font-family: 'OptimusPrinceps';
-  src: url('../../assets/fonts/OptimusPrinceps.ttf') format('truetype');
+  src: url('/src/assets/fonts/OptimusPrinceps.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'OptimusPrincepsSemiBold';
-  src: url('../../assets/fonts/OptimusPrincepsSemiBold.ttf') format('truetype');
+  src: url('/src/assets/fonts/OptimusPrincepsSemiBold.ttf') format('truetype');
 }
 
 
@@ -27,7 +27,7 @@
 }
 
 .bg-img {
-  background-image: url('../../assets/img/img_bg_home.jpg');
+  background-image: url('../../../assets/img/img_bg_home.jpg');
   height: 100%;
   width: 100%;
   background-size: cover;

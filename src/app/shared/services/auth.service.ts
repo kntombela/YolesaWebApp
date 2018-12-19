@@ -74,6 +74,7 @@ export class AuthService {
     this.expiresAt = (authResult.expiresIn * 1000) + Date.now();
     // Store expiration in local storage to access in constructor
     localStorage.setItem('expires_at', JSON.stringify(this.expiresAt));
+    console.log(JSON.stringify(authResult.accessToken));
     this.accessToken = authResult.accessToken;
     // If initial login, set profile and admin information
     if (profile) {

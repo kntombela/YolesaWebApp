@@ -1,0 +1,56 @@
+$color_1: #868e96;
+$color_2: #818EA3;
+$color_3: #fff;
+$color_4: #876933;
+$color_5: gray;
+$color_6: inherit;
+$background_color_1: #F5F6F8;
+$background_color_2: transparent;
+$background_color_3: lightgray;
+$border_color_1: transparent;
+
+.dropdown-menu-item {
+	color: $color_1;
+}
+.crud-actions {
+	position: fixed;
+	height: 35px;
+	width: 100%;
+	z-index: 20;
+	background-color: $background_color_1;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+.btn-crud-primary {
+	background-color: $background_color_2;
+	background-image: none;
+	border-color: $border_color_1;
+	color: $color_2;
+	&:hover {
+		color: $color_3;
+		color: $color_4;
+		border-color: $border_color_1;
+	}
+}
+.row-selected {
+	background-color: $background_color_3;
+	.row-options {
+		visibility: visible;
+	}
+}
+.row-options {
+	visibility: hidden;
+	color: $color_5;
+	cursor: pointer;
+}
+.detail-link {
+	color: $color_6;
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+@media only screen and (max-width: 575px) {
+	.hide {
+		display: none;
+	}
+}

@@ -11,12 +11,13 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  
+
   pageTitle = 'Member Detail';
   @Input() member: Member;
+  loading: boolean;
 
   constructor(
-    private title: Title, 
+    private title: Title,
     private route: ActivatedRoute,
     private memberService: MemberService,
     private location: Location
@@ -24,12 +25,21 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getMember();
+    this._getMember();
   }
 
-  getMember(): void {
+  private _getMember() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.memberService.getMember(id)
-      .subscribe(member => this.member = member);
+    this.memberService
+      .getMember(id)
+      .subscribe(member => {
+        this.member = member,
+          this.loading = false;
+      });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

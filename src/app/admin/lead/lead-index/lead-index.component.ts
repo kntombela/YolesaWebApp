@@ -1,11 +1,11 @@
+import { UtilsService } from './../../../core/utils.service';
 import { Title } from '@angular/platform-browser';
 import { CrudUtil } from './../../shared/utils/crudUtil';
-import { Checkboxes } from './../../shared/checkboxes';
-import { Location } from '@angular/common';
 import { LeadService } from './../lead.service';
 import { Lead } from './../lead';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-declare var $ :any;
+import { Component, OnInit } from '@angular/core';
+
+declare var $: any;
 
 @Component({
   selector: 'app-lead-index',
@@ -17,29 +17,44 @@ export class LeadIndexComponent implements OnInit {
   pageTitle = 'Lead Index';
   leads: Lead[];
   crud = new CrudUtil(this.leads);
+  loading: boolean;
 
   constructor(
     private title: Title,
     private leadService: LeadService,
-    location: Location
+    public utils: UtilsService
   ) { }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getLeads();
+    this._getLeads();
   }
 
-  getLeads(): void {
-    this.leadService.get()
-      .subscribe(leads => this.crud.data = leads);
+  private _getLeads() {
+    this.loading = true;
+    this.leadService
+      .get()
+      .subscribe(leads => {
+        this.crud.data = leads;
+        this.loading = false;
+      });
   }
 
-  delete(): void {
-    this.leadService.delete(this.crud.getSelectedItemIds()).subscribe(response => {
-      this.getLeads(); //Refresh of data can only happen once data is available => async
-    });
+  delete() {
+    this.loading = true;
+    this.leadService
+      .delete(this.crud.getSelectedItemIds())
+      .subscribe(_ => {
+        //Refresh data after successfull delete
+        this.refresh();
+        this.loading = false;
+      });
     $('#deleteModal').modal('hide');
     this.crud.resetSelectedItems();
+  }
+
+  refresh() {
+    this._getLeads();
   }
 
   onCheckAllRows(value) {
@@ -48,9 +63,5 @@ export class LeadIndexComponent implements OnInit {
 
   onCheckRow(value, id) {
     this.crud.checkRow(value, id);
-  }
-
-  refresh(){
-    this.getLeads();
   }
 }

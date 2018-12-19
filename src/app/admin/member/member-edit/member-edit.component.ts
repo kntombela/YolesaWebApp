@@ -24,6 +24,7 @@ export class MemberEditComponent implements OnInit {
   addressType = AddressType;
   at = AddressType.Residential;
   memberId = +this.route.snapshot.paramMap.get('id');
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,29 +34,31 @@ export class MemberEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getMember();
+    this._getMember();
     this.getAddress(this.memberId, this.at);
   }
 
-  getMember(): void {
-    this.memberService.getMember(this.memberId)
-      .subscribe(
-        member => this.member = member
-      );
+  private _getMember() {
+    this.loading = true;
+    this.memberService
+      .getMember(this.memberId)
+      .subscribe(member => {
+        this.member = member;
+        this.loading = false;
+      });
   }
 
-  getAddress(memberId: number, addressType: AddressType): void {
+  getAddress(memberId: number, addressType: AddressType) {
     this.addressService.getMemberAddress(memberId, addressType)
       .subscribe(address => this.address = address);
   }
 
-  update(): void {
+  update() {
     this.memberService.update(this.member)
       .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

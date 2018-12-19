@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './../components/messages/message.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, retry } from 'rxjs/operators';
 import { ENV } from 'src/app/core/env.config';
 
 const httpOptions = {
@@ -30,7 +30,7 @@ export class GroupService {
       headers: new HttpHeaders().set('Authorization', this._authHeader)
     })
       .pipe(
-        tap(),
+        retry(3),
         catchError(this.handleError('getGroups', []))
       );
   }

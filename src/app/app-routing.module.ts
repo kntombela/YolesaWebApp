@@ -1,10 +1,10 @@
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { CallbackComponent } from './shared/callback/callback/callback.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 const routes: Routes = [

@@ -16,20 +16,21 @@ export class MemberNewComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private memberService: MemberService, 
+    private memberService: MemberService,
     private location: Location
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
   }
 
-  add(member: Member): void {
-    this.memberService.add(member).subscribe(() => this.goBack());
+  add(member: Member) {
+    this.memberService
+      .add(member)
+      .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

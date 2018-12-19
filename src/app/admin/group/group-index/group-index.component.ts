@@ -1,10 +1,12 @@
+import { CrudUtilService } from './../../shared/utils/crud.util.service';
+import { HeaderService } from './../../components/header/header.service';
+import { FilterSortService } from './../../../core/filter-sort.service';
 import { GroupService } from './../group.service';
 import { Group } from './../group';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CrudUtil } from '../../shared/utils/crudUtil';
+import { Component, OnInit, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { UtilsService } from 'src/app/core/utils.service';
-import { Subscription } from 'rxjs';
+
 declare var $: any;
 
 @Component({
@@ -12,56 +14,61 @@ declare var $: any;
   templateUrl: './group-index.component.html',
   styleUrls: ['./group-index.component.css']
 })
-export class GroupIndexComponent implements OnInit, OnDestroy {
+export class GroupIndexComponent implements OnInit {
 
   pageTitle = 'Group Index';
-  groups: Group[];
-  crud = new CrudUtil(this.groups);
   loading: boolean;
-  groupListSub: Subscription;
 
   constructor(
     private title: Title,
     private groupService: GroupService,
-    public utils: UtilsService, ) { }
+    public utils: UtilsService,
+    public fs: FilterSortService, 
+    public headerService: HeaderService,
+    public crud: CrudUtilService
+  ) { }
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getGroups();
+    this._getGroups();
   }
 
-  getGroups(): void {
+  private _getGroups() {
     this.loading = true;
-    this.groupListSub = this.groupService
+    this.groupService
       .get()
       .subscribe(groups => {
         this.crud.data = groups;
+        this.crud.filteredData = groups;
         this.loading = false;
       });
   }
 
-  onCheckAllRows(value) {
-    this.crud.checkAll(value);
-  }
-
-  onCheckRow(value, id) {
-    this.crud.checkRow(value, id);
-  }
-
-  refresh() {
-    this.getGroups();
-  }
-
-  delete(): void {
-    this.groupService.delete(this.crud.getSelectedItemIds()).subscribe(response => {
-      this.getGroups(); //Refresh of data can only happen once data is available => async
-    });
+  delete() {
+    this.loading = true;
+    this.groupService
+      .delete(this.crud.getSelectedItemIds())
+      .subscribe(_ => {
+        //Refresh data after successfull delete
+        this.refresh();
+        this.loading = false;
+      });
     $('#deleteModal').modal('hide');
     this.crud.resetSelectedItems();
   }
 
-  ngOnDestroy() {
-    this.groupListSub.unsubscribe();
-  }
+  // TODO: Move to CrudUtil service
+  // searchGroups() {
+  //   this.crud.filteredData = this.fs.search(this.crud.data, this.crud.query, 'id');
+  // }
 
+  // resetQuery() {
+  //   this.crud.query = '';
+  //   this.crud.filteredData = this.crud.data;
+  // }
+
+  refresh() {
+    this._getGroups();
+    this.crud.resetQuery();
+  }
 }

@@ -24,7 +24,7 @@
               "src/web.config"
             ],
             "styles": [
-              "src/styles/app.css"
+              "src/assets/scss/app.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

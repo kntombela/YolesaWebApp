@@ -16,6 +16,7 @@ export class GroupEditComponent implements OnInit {
   pageTitle = 'Edit Group';
   @Input() group: Group;
   groupType = GroupType;
+  loading: boolean;
 
   constructor(
     private title: Title,
@@ -26,22 +27,27 @@ export class GroupEditComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getGroup();
+    this._getGroup();
   }
 
-  getGroup(): void {
+  private _getGroup() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.groupService.getGroup(id)
-      .subscribe(group => this.group = group);
+    this.groupService
+      .getGroup(id)
+      .subscribe(group => {
+        this.group = group;
+        this.loading = false;
+      });
   }
 
-  update(): void {
-    this.groupService.update(this.group)
-      .subscribe(() => this.goBack());
+  update() {
+    this.groupService
+      .update(this.group)
+      .subscribe(_ => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

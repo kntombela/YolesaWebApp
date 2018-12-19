@@ -14,7 +14,7 @@ interface AuthConfig {
   export const AUTH_CONFIG: AuthConfig = {
     CLIENT_ID: 'VcWNz2N1x48Et4hS3Jd8Z4h5IhQP1jMB',
     CLIENT_DOMAIN: 'yolesa.auth0.com',
-    RESPONSE_TYPE: 'token id_token',
+    RESPONSE_TYPE: 'token',
     AUDIENCE: 'https://yolesa/api',
     REDIRECT: `${ENV.BASE_URI}/callback`,
     SCOPE: 'openid profile read:messages',

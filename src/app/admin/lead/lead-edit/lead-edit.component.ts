@@ -16,6 +16,7 @@ export class LeadEditComponent implements OnInit {
   pageTitle = 'Edit Lead';
   @Input() lead: Lead;
   status = STATUS;
+  loading: boolean;
 
   constructor(
     private title: Title,
@@ -26,22 +27,26 @@ export class LeadEditComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle(this.pageTitle);
-    this.getLead();
+    this._getLead();
   }
 
-  getLead(): void {
+  private _getLead() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.leadService.getLead(id)
-      .subscribe(lead => this.lead = lead);
+    this.leadService
+      .getLead(id)
+      .subscribe(lead => {
+        this.lead = lead;
+        this.loading = false;
+      });
   }
 
-  update(): void {
+  update() {
     this.leadService.update(this.lead)
-      .subscribe(() => this.goBack());
+      .subscribe(_ => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

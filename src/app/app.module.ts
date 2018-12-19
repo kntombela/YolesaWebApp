@@ -1,3 +1,4 @@
+import { FilterSortService } from './core/filter-sort.service';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guard/auth.guard';
@@ -10,10 +11,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { CallbackComponent } from './shared/callback/callback/callback.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HeaderComponent } from './components/header/header.component';
     LeadService,
     AuthGuard,
     AuthService,
-    Title
+    Title,
+    FilterSortService
   ],
   bootstrap: [AppComponent]
 })
