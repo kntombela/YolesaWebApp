@@ -26,7 +26,7 @@ export class CrudUtil {
             if (row != null) {
                 this.checkboxes.items[row.id] = value;
             }
-        })       
+        })
         this.setCrudActions(this.getSelectedItemCount());
     }
 

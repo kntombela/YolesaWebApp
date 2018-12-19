@@ -1,9 +1,11 @@
 import { GroupType } from './groupTypeEnum';
 export class Group {
-    id: number;
-    name: string;
-    type: GroupType;
-    policyNumber: string;
-    industry: string;
-    dateModified: Date;
+    constructor(
+        public name: string = '',
+        public type: GroupType = 0,
+        public policyNumber: string = '',
+        public industry: string = '',
+        public dateModified: Date = new Date(),
+        public id?: number 
+    ) { }
 }

@@ -1,3 +1,5 @@
+import { CrudUtilService } from './../../shared/utils/crud.util.service';
+import { HeaderService } from './header.service';
 import { AuthService } from './../../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -5,27 +7,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  profile: any;
-
-  constructor(private router: Router, private auth: AuthService) { }
-
-  ngOnInit() {
-    if (this.auth.userProfile) {
-      this.profile = this.auth.userProfile;
-      console.log(JSON.stringify(this.profile));
-    } else {
-      this.auth.getProfile((err, profile) => {
-        this.profile = profile; 
-      });
-    }
-  }
-
-  public logout(): void {
-    this.auth.logout();
-  }
+  constructor(
+    public auth: AuthService,
+    public crud: CrudUtilService,
+  ) { }
 
 }

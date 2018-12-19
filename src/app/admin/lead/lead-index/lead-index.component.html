@@ -49,8 +49,10 @@
     <h3 class="page-title">Index</h3>
   </div>
 </div>
+<!-- Loading Spinner -->
+<app-loading *ngIf="loading"></app-loading>
 <!-- Table of Leads -->
-<div class="row">
+<div *ngIf="utils.isLoaded(loading)" class="row">
   <div class="col">
     <div class="card card-small mb-4">
       <div class="card-body p-0 pb-3">
@@ -77,7 +79,7 @@
                   [(ngModel)]="crud.checkboxes.items[lead.id]">
               </td>
               <td>{{i+1}}</td>
-              <td>{{lead.name}}</td>
+              <td class="detail-link" routerLink="/admin/lead/detail/{{lead.id}}">{{lead.name}}</td>
               <td class="hide">{{lead.surname}}</td>
               <td class="hide">{{lead.email}}</td>
               <td class="hide">{{lead.phone}}</td>

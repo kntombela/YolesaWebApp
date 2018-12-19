@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { STATUS } from './../../shared/status';
 import { LeadService } from './../lead.service';
 import { Lead } from './../lead';
@@ -12,32 +13,40 @@ import { Location } from '@angular/common';
 })
 export class LeadDetailComponent implements OnInit {
 
+  pageTitle = 'Lead Detail';
   @Input() lead: Lead;
   status = STATUS;
+  loading: boolean;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private leadService: LeadService,
     private location: Location
   ) { }
 
   ngOnInit() {
-    this.getLead();
+    this.title.setTitle(this.pageTitle);
+    this._getLead();
   }
 
-  getLead(): void {
+  private _getLead() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.leadService.getLead(id)
-      .subscribe(lead => this.lead = lead);
+    this.leadService
+      .getLead(id)
+      .subscribe(lead => {
+        this.lead = lead,
+          this.loading = false;
+      });
   }
 
-  update(): void {
+  update() {
     this.leadService.update(this.lead)
       .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

@@ -23,9 +23,11 @@ import { LeadEditComponent } from './lead/lead-edit/lead-edit.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { AddressEditComponent } from './address/address-edit/address-edit.component';
 import { EnumPipe } from './shared/pipes/enum.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
+    SharedModule,
     CommonModule,
     FormsModule, 
     AdminRoutingModule

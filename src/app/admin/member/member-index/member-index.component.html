@@ -50,7 +50,7 @@
   </div>
 </div>
 <!-- Table of members -->
-<div class="row">
+<div *ngIf="utils.isLoaded(loading)" class="row">
   <div class="col">
     <div class="card card-small mb-4">
       <div class="card-body p-0 pb-3">

@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class CallbackComponent implements OnInit {
 
   constructor(private auth: AuthService) { 
-    auth.handleAuthentication();
+    auth.handleAuth();
   }
 
   ngOnInit() {

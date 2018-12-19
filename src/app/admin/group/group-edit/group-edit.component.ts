@@ -4,6 +4,7 @@ import { GroupType } from '../groupTypeEnum';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from '../group.service';
 import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-group-edit',
@@ -12,32 +13,41 @@ import { Location } from '@angular/common';
 })
 export class GroupEditComponent implements OnInit {
 
+  pageTitle = 'Edit Group';
   @Input() group: Group;
   groupType = GroupType;
+  loading: boolean;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private groupService: GroupService,
     private location: Location
   ) { }
 
   ngOnInit() {
-    this.getGroup();
+    this.title.setTitle(this.pageTitle);
+    this._getGroup();
   }
 
-  getGroup(): void {
+  private _getGroup() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.groupService.getGroup(id)
-      .subscribe(group => this.group = group);
+    this.groupService
+      .getGroup(id)
+      .subscribe(group => {
+        this.group = group;
+        this.loading = false;
+      });
   }
 
-  update(): void {
-    this.groupService.update(this.group)
-      .subscribe(() => this.goBack());
+  update() {
+    this.groupService
+      .update(this.group)
+      .subscribe(_ => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

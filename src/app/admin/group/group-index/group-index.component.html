@@ -49,8 +49,34 @@
     <h3 class="page-title">Index</h3>
   </div>
 </div>
+      <!-- Search Groups -->
+      <!-- <label class="sr-only" for="search">Search</label>
+      <div class="search input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Search</div>
+        </div>
+        <input
+          id="search"
+          type="text"
+          class="form-control"
+          [(ngModel)]="query"
+          (keyup)="searchGroups()" />
+        <span class="input-group-append">
+          <button
+            class="btn btn-danger"
+            (click)="resetQuery()"
+            [disabled]="!query">&times;</button>
+        </span>
+      </div> -->
+            <!-- No search results -->
+            <p *ngIf="fs.noSearchResults(crud.filteredData, crud.query)" class="alert alert-warning">
+                No groups found for <em class="text-danger">{{ crud.query }}</em>, sorry!
+              </p>
+        
+<!-- Loading Spinner -->
+<app-loading *ngIf="loading"></app-loading>
 <!-- Table of Groups -->
-<div class="row">
+<div *ngIf="utils.isLoaded(loading)" class="row">
   <div class="col">
     <div class="card card-small mb-4">
       <div class="card-body p-0 pb-3">
@@ -58,7 +84,7 @@
           <thead class="bg-light">
             <tr>
               <th scope="col" class="border-0">
-                <input type="checkbox" (ngModelChange)="onCheckAllRows($event)" [(ngModel)]="crud.checkboxes.checked">
+                <input type="checkbox" (ngModelChange)="crud.checkAllRows($event)" [(ngModel)]="crud.checkboxes.checked">
               </th>
               <th scope="col" class="border-0">#</th>
               <th scope="col" class="border-0">Name</th>
@@ -68,16 +94,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let group of crud.data; let i = index" (click)="crud.resetSelectedItems(); onCheckRow($event, group.id)"
+              <tr *ngFor="let group of crud.filteredData; let i = index" (click)="crud.resetSelectedItems(); crud.checkRow($event, group.id)"
               [ngClass]="{'row-selected': crud.checkboxes.items[group.id]}">
               <td>
-                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="onCheckRow($event, group.id)"
+                <input type="checkbox" (click)="$event.stopPropagation();" (ngModelChange)="crud.checkRow($event, group.id)"
                   [(ngModel)]="crud.checkboxes.items[group.id]">
               </td>
               <td>{{i+1}}</td>
-              <td>
-                <span class="detail-link" routerLink="/admin/group/detail/{{group.id}}">{{group.name}}</span>
-              </td>
+              <td class="detail-link" routerLink="/admin/group/detail/{{group.id}}">{{group.name}}</td>
               <td class="hide text-center">{{group.memberCount}}</td>
               <td class="hide text-center">{{group.policyNumber}}</td>
               <td>
@@ -87,7 +111,7 @@
                   <a class="dropdown-item" routerLink="/admin/group/edit/{{group.id}}">
                     <i class="material-icons dropdown-menu-item mr-1">edit</i> Edit
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal">
                     <i class="material-icons dropdown-menu-item mr-1">delete</i> Delete
                   </a>
                 </div>

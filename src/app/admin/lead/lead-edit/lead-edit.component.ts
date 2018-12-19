@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
 import { Lead } from '../lead';
 import { STATUS } from '../../shared/status';
@@ -12,32 +13,40 @@ import { Location } from '@angular/common';
 })
 export class LeadEditComponent implements OnInit {
 
+  pageTitle = 'Edit Lead';
   @Input() lead: Lead;
   status = STATUS;
+  loading: boolean;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private leadService: LeadService,
     private location: Location
   ) { }
 
   ngOnInit() {
-    this.getLead();
+    this.title.setTitle(this.pageTitle);
+    this._getLead();
   }
 
-  getLead(): void {
+  private _getLead() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.leadService.getLead(id)
-      .subscribe(lead => this.lead = lead);
+    this.leadService
+      .getLead(id)
+      .subscribe(lead => {
+        this.lead = lead;
+        this.loading = false;
+      });
   }
 
-  update(): void {
+  update() {
     this.leadService.update(this.lead)
-      .subscribe(() => this.goBack());
+      .subscribe(_ => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }

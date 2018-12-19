@@ -1,7 +1,13 @@
+import { CrudUtilService } from './../../shared/utils/crud.util.service';
+import { HeaderService } from './../../components/header/header.service';
+import { FilterSortService } from './../../../core/filter-sort.service';
 import { GroupService } from './../group.service';
 import { Group } from './../group';
-import { Component, OnInit } from '@angular/core';
-import { CrudUtil } from '../../shared/utils/crudUtil';
+import { Component, OnInit, Input } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { UtilsService } from 'src/app/core/utils.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-group-index',
@@ -10,30 +16,59 @@ import { CrudUtil } from '../../shared/utils/crudUtil';
 })
 export class GroupIndexComponent implements OnInit {
 
-  pageTitle = 'Group';
-  groups: Group[];
-  crud = new CrudUtil(this.groups);
+  pageTitle = 'Group Index';
+  loading: boolean;
 
-  constructor(private groupService: GroupService) { }
+  constructor(
+    private title: Title,
+    private groupService: GroupService,
+    public utils: UtilsService,
+    public fs: FilterSortService, 
+    public headerService: HeaderService,
+    public crud: CrudUtilService
+  ) { }
 
   ngOnInit() {
-    this.getGroups();
+    this.title.setTitle(this.pageTitle);
+    this._getGroups();
   }
 
-  getGroups(): void {
-    this.groupService.get()
-      .subscribe(groups => this.crud.data = groups);
+  private _getGroups() {
+    this.loading = true;
+    this.groupService
+      .get()
+      .subscribe(groups => {
+        this.crud.data = groups;
+        this.crud.filteredData = groups;
+        this.loading = false;
+      });
   }
 
-  onCheckAllRows(value) {
-    this.crud.checkAll(value);
+  delete() {
+    this.loading = true;
+    this.groupService
+      .delete(this.crud.getSelectedItemIds())
+      .subscribe(_ => {
+        //Refresh data after successfull delete
+        this.refresh();
+        this.loading = false;
+      });
+    $('#deleteModal').modal('hide');
+    this.crud.resetSelectedItems();
   }
 
-  onCheckRow(value, id) {
-    this.crud.checkRow(value, id);
-  }
+  // TODO: Move to CrudUtil service
+  // searchGroups() {
+  //   this.crud.filteredData = this.fs.search(this.crud.data, this.crud.query, 'id');
+  // }
 
-  refresh(){
-    this.getGroups();
+  // resetQuery() {
+  //   this.crud.query = '';
+  //   this.crud.filteredData = this.crud.data;
+  // }
+
+  refresh() {
+    this._getGroups();
+    this.crud.resetQuery();
   }
 }

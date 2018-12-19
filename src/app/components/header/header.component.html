@@ -1,0 +1,31 @@
+<nav class="navbar navbar-light align-items-stretch pt-0">
+  <a class="navbar-brand" href="#">
+    <img src="../../assets/img/icons/ic_full_right.png" width="200" height="45" class="d-inline-block align-top" alt="">
+  </a>
+  <ul class="navbar-nav flex-row mt-3">
+    <li class="nav-item dropdown">
+      <span *ngIf="auth.loggingIn">Logging in...</span>
+      <ng-template [ngIf]="!auth.loggingIn">
+        <a *ngIf="!auth.loggedIn" href="javascript:void(0)" (click)="auth.login()">Login/Register</a>
+        <span *ngIf="auth.loggedIn && auth.userProfile">
+          <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">
+            <img class="user-avatar rounded-circle mr-2" src="{{ auth.userProfile.picture }}" alt="User Avatar">
+            <span class="d-none d-md-inline-block">{{ auth.userProfile.nickname | titlecase }}</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-small">
+            <a class="dropdown-item" href="user-profile-lite.html">
+              <i class="material-icons">&#xE7FD;</i> Profile</a>
+            <a class="dropdown-item" href="components-blog-posts.html">
+              <i class="material-icons">vertical_split</i> Blog Posts</a>
+            <a class="dropdown-item" href="add-new-post.html">
+              <i class="material-icons">note_add</i> Add New Post</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="javascript:void(0);" (click)="auth.logout()">
+              <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+          </div>
+        </span>
+      </ng-template>
+    </li>
+  </ul>
+</nav>

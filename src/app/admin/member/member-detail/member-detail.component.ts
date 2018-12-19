@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '../member.service';
 import { Location } from '@angular/common';
 import { Member } from '../member';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-member-detail',
@@ -10,22 +11,35 @@ import { Member } from '../member';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  
+
+  pageTitle = 'Member Detail';
   @Input() member: Member;
+  loading: boolean;
 
   constructor(
+    private title: Title,
     private route: ActivatedRoute,
     private memberService: MemberService,
     private location: Location
   ) { }
 
   ngOnInit() {
-    this.getMember();
+    this.title.setTitle(this.pageTitle);
+    this._getMember();
   }
 
-  getMember(): void {
+  private _getMember() {
+    this.loading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.memberService.getMember(id)
-      .subscribe(member => this.member = member);
+    this.memberService
+      .getMember(id)
+      .subscribe(member => {
+        this.member = member,
+          this.loading = false;
+      });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

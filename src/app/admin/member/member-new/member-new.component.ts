@@ -2,6 +2,7 @@ import { Member } from './../member';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../member.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-member-new',
@@ -10,19 +11,26 @@ import { MemberService } from '../member.service';
 })
 export class MemberNewComponent implements OnInit {
 
+  pageTitle = 'New Member';
   member = new Member();
 
-  constructor(private memberService: MemberService, private location: Location) { }
+  constructor(
+    private title: Title,
+    private memberService: MemberService,
+    private location: Location
+  ) { }
 
   ngOnInit() {
+    this.title.setTitle(this.pageTitle);
   }
 
-  add(member: Member): void {
-    this.memberService.add(member).subscribe(() => this.goBack());
+  add(member: Member) {
+    this.memberService
+      .add(member)
+      .subscribe(() => this.goBack());
   }
 
-  goBack(): void {
+  goBack() {
     this.location.back();
   }
-
 }
